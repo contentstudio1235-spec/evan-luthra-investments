@@ -359,6 +359,20 @@ body.dark button:hover {
   background-color: #1f2937;
 }
 
+/* =========================
+   DARK MODE – SEARCH BAR CONTAINER
+========================= */
+
+body.dark .controls {
+  background-color: #0f172a;   /* dark navy */
+  border: 1px solid #1f2937;
+}
+
+/* Optional: soften edges */
+body.dark .controls {
+  border-radius: 10px;
+}
+
 
 
 
