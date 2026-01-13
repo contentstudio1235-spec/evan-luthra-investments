@@ -114,5 +114,30 @@ header.hero {
   z-index: 100;
   background: white;
 }
+.dark-toggle {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+body.dark {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+body.dark table,
+body.dark th,
+body.dark td {
+  border-color: #334155;
+}
+
+body.dark .tag {
+  color: #111;
+}
+
 
 
