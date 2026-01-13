@@ -15,9 +15,11 @@ const projects = [
     name: "Stratos Network",
     category: ["DePIN"],
     intro: "Building the next generation of decentralized data mesh",
-    website: "https://www.thestratos.org",
-    twitter: "https://x.com/Stratos_Network",
     date: "2024-12-30",
+    round: "Not started",    // "Not started"
+   status: "Upcoming",    // "Upcoming"
+   website: "https://www.thestratos.org",
+    twitter: "https://x.com/Stratos_Network", 
     icon: "icons/stratos-network.png"
   },
   {
@@ -25,9 +27,14 @@ const projects = [
     name: "Push Protocol",
     category: ["Wallet"],
     intro: "The communication layer of Web3",
+    date: ,
+    round: ,    // "Not started"
+   status: ,    // "Upcoming"
     website: "https://push.org",
     twitter: "https://x.com/pushprotocol",
-    date: "2024-01-01",
     icon: "icons/push-protocol.png"
   }
 ];
+
+
+
