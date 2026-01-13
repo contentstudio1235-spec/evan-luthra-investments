@@ -80,6 +80,17 @@
   height: 80px;
   object-fit: contain;
 }
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 999;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: inherit;
+}
 
     /* ===== DARK MODE ===== */
 
@@ -101,6 +112,7 @@
 
 <div class="project-page">
   <nav class="breadcrumb">
+    <button id="themeToggle" class="theme-toggle">🌙</button>
     <a href="index.html">Evan Luthra Investments</a>
     <span>/</span>
     <a href="index.html#portfolio">Portfolio</a>
@@ -117,6 +129,24 @@
 
 <script>
   // Apply theme
+  <script>
+  const toggleBtn = document.getElementById("themeToggle");
+
+  function applyTheme() {
+    const isDark = localStorage.getItem("theme") === "dark";
+    document.body.classList.toggle("dark", isDark);
+    toggleBtn.textContent = isDark ? "☀️" : "🌙";
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    const isDark = document.body.classList.contains("dark");
+    localStorage.setItem("theme", isDark ? "light" : "dark");
+    applyTheme();
+  });
+
+  applyTheme();
+</script>
+
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark");
   }
@@ -173,4 +203,5 @@
 
 </body>
 </html>
+
 
