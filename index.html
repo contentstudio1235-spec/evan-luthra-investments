@@ -185,9 +185,20 @@ pageItems.forEach(p => {
 document.getElementById("pageInfo").textContent =
   `Page ${currentPage} of ${totalPages || 1}`;
 
-    search.oninput = render;
-    filter.onchange = render;
-    sort.onchange = render;
+  search.oninput = () => {
+  currentPage = 1;
+  render();
+};
+
+filter.onchange = () => {
+  currentPage = 1;
+  render();
+};
+
+sort.onchange = () => {
+  currentPage = 1;
+  render();
+};
 
     render(); // INITIAL RENDER
   });
@@ -195,5 +206,6 @@ document.getElementById("pageInfo").textContent =
 
 </body>
 </html>
+
 
 
