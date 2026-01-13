@@ -288,6 +288,34 @@ body.dark .pagination button:hover {
 /* -------------------------
    PROJECT PAGE
 ------------------------- */
+/* =========================
+   PROJECT NAME + ICON ALIGNMENT
+========================= */
+
+.project-cell {
+  display: flex;
+  align-items: center;       /* 🔑 vertical alignment */
+  gap: 10px;                 /* space between icon and text */
+}
+
+.project-cell .icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;            /* icon never moves */
+  display: block;
+}
+
+.project-cell .project-name {
+  display: block;
+  line-height: 1.3;
+  white-space: normal;       /* allow wrapping */
+}
+
+/* Keep multi-line text aligned nicely */
+.project-cell .project-name {
+  align-self: center;
+}
+
 
 
 
