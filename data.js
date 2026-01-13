@@ -8,7 +8,8 @@ const CATEGORY_COLORS = {
   "Cross Chain": "#ecfeff"
 };
 
-// Projects data (PLAIN JAVASCRIPT, NOT JSON)
+// data.js — PLAIN JAVASCRIPT (NOT JSON)
+
 const projects = [
   {
     id: "stratos-network",
@@ -24,19 +25,6 @@ const projects = [
   }
 ];
 
-  {
-    id: "push-protocol",
-    name: "Push Protocol",
-    category: ["Wallet"],
-    intro: "The communication layer of Web3",
-    date: ,
-    round: ,    // "Not started"
-   status: ,    // "Upcoming"
-    website: "https://push.org",
-    twitter: "https://x.com/pushprotocol",
-    icon: "icons/push-protocol.png"
-  }
-];
 
 
 
