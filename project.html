@@ -113,12 +113,14 @@ body.dark .breadcrumb {
     document.getElementById("project").innerHTML =
       "<h2>Project not found</h2>";
   } else {
-    document.getElementById("project").innerHTML = `
-      <img src="${project.icon}" class="project-logo" alt="${project.name}" />
+   document.getElementById("project").innerHTML = `
+  ${project.icon ? `
+    <img src="${project.icon}" class="project-logo" alt="${project.name}" />
+  ` : ""}
 
-      <h1 class="project-title">${project.name}</h1>
+  <h1 class="project-title">${project.name}</h1>
 
-      <div class="info-grid">
+  <div class="info-grid">
 
         <div class="info-label">Category</div>
         <div>${project.category.map(c => `<span class="tag">${c}</span>`).join(" ")}</div>
@@ -160,4 +162,5 @@ body.dark .breadcrumb {
   
 </body>
 </html>
+
 
