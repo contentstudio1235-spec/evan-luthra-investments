@@ -110,9 +110,21 @@
   filter.onchange = render;
   render();
 </script>
+<script>
+  const toggle = document.getElementById("darkToggle");
+  const saved = localStorage.getItem("dark");
+
+  if (saved === "true") document.body.classList.add("dark");
+
+  toggle.onclick = () => {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("dark", document.body.classList.contains("dark"));
+  };
+</script>
 
 </body>
 </html>
+
 
 
 
