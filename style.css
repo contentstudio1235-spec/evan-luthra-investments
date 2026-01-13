@@ -12,9 +12,11 @@ body {
 
 .banner {
   width: 100%;
-  height: 260px;
+  height: 220px;          /* LIMIT HEIGHT */
   object-fit: cover;
+  display: block;
 }
+
 
 .hero-content {
   padding: 40px;
@@ -109,11 +111,10 @@ th, td {
   display: inline-block;
 }
 header.hero {
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  position: relative;     /* NOT sticky for the full hero */
   background: white;
 }
+
 .dark-toggle {
   position: absolute;
   top: 20px;
@@ -137,6 +138,18 @@ body.dark td {
 
 body.dark .tag {
   color: #111;
+}
+
+h2 {
+  margin-top: 60px;
+}
+.controls {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 50;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 
