@@ -108,4 +108,11 @@ th, td {
   margin-right: 6px;
   display: inline-block;
 }
+header.hero {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+}
+
 
