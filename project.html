@@ -1,35 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Project</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Project Details</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .project-wrap {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .project-header {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .project-header img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+    }
+
+    .tags span {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      background: #eee;
+      margin-right: 6px;
+    }
+
+    .meta {
+      margin: 20px 0;
+      line-height: 1.8;
+    }
+
+    .meta a {
+      display: inline-block;
+      margin-right: 12px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .back {
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
 
-<a href="index.html">← Portfolio</a>
+<a class="back" href="index.html">← Back to Portfolio</a>
 
-<div id="project"></div>
+<div class="project-wrap" id="project"></div>
 
 <script src="data.js"></script>
+
 <script>
-  const id = new URLSearchParams(window.location.search).get("id");
-  const p = projects.find(x => x.id === id);
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
 
-  document.getElementById("project").innerHTML = `
-    <img src="${p.icon}" class="logo">
-    <h1>${p.name}</h1>
+  const project = projects.find(p => p.id === id);
 
-    <div class="details">
-      <p><b>Category:</b> ${p.category.join(", ")}</p>
-      <p><b>Company Intro:</b> ${p.intro}</p>
-      <p><b>Date:</b> ${p.date}</p>
-      <p><b>Round Invested:</b> <span class="badge">${p.round}</span></p>
-      <p><b>Status:</b> <span class="badge">${p.status}</span></p>
-      <p><b>Twitter:</b> <a href="${p.twitter}" target="_blank">${p.twitter}</a></p>
-      <p><b>Website:</b> <a href="${p.website}" target="_blank">${p.website}</a></p>
-    </div>
-  `;
+  if (!project) {
+    document.getElementById("project").innerHTML =
+      "<h2>Project not found</h2>";
+  } else {
+    document.getElementById("project").innerHTML = `
+      <div class="project-header">
+        <img src="${project.icon}" alt="${project.name}" />
+        <h1>${project.name}</h1>
+      </div>
+
+      <div class="tags">
+        ${project.category.map(c => `<span>${c}</span>`).join("")}
+      </div>
+
+      <p style="margin-top:16px;">${project.intro || ""}</p>
+
+      <div class="meta">
+        <strong>Date:</strong> ${project.date || "—"}<br />
+
+        ${project.website ? `<a href="${project.website}" target="_blank">🌐 Website</a>` : ""}
+        ${project.twitter ? `<a href="${project.twitter}" target="_blank">🐦 Twitter</a>` : ""}
+      </div>
+    `;
+  }
 </script>
+
 
 </body>
 </html>
