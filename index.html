@@ -99,10 +99,11 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* ------------------ ELEMENTS ------------------ */
-  const table = document.getElementById("portfolio");
-  const search = document.getElementById("search");
-  const filter = document.getElementById("categoryFilter");
-  const sort = document.getElementById("sort");
+ window.table  = document.getElementById("portfolio");
+window.search = document.getElementById("search");
+window.filter = document.getElementById("categoryFilter");
+window.sort   = document.getElementById("sort");
+
 
   /* ------------------ CATEGORY COLORS ------------------ */
   const CATEGORY_COLORS = {
@@ -262,4 +263,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
 
