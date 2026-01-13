@@ -41,7 +41,15 @@
   <select id="categoryFilter">
     <option value="">All Categories</option>
   </select>
+
+  <select id="sort">
+    <option value="">Sort</option>
+    <option value="az">Name A–Z</option>
+    <option value="za">Name Z–A</option>
+    <option value="date">Newest</option>
+  </select>
 </div>
+>
 
 <!-- PORTFOLIO -->
 <h2>💲 Portfolio</h2>
@@ -64,8 +72,9 @@
   const table = document.getElementById("portfolio");
   const search = document.getElementById("search");
   const filter = document.getElementById("categoryFilter");
+  const sort = document.getElementById("sort");
 
-  // populate filter dropdown
+  // Populate category filter
   const categories = new Set(projects.flatMap(p => p.category));
   categories.forEach(c => {
     const opt = document.createElement("option");
@@ -75,55 +84,79 @@
   });
 
   function render() {
-    const q = search.value.toLowerCase();
-    const cat = filter.value;
+    const query = search.value.toLowerCase();
+    const selectedCategory = filter.value;
+    const sortValue = sort.value;
 
+    let list = [...projects];
+
+    // 🔍 SEARCH
+    list = list.filter(p =>
+      p.name.toLowerCase().includes(query) ||
+      p.intro.toLowerCase().includes(query)
+    );
+
+    // 🏷 CATEGORY FILTER
+    if (selectedCategory) {
+      list = list.filter(p => p.category.includes(selectedCategory));
+    }
+
+    // ↕ SORTING
+    if (sortValue === "az") {
+      list.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    if (sortValue === "za") {
+      list.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    if (sortValue === "date") {
+      list.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+
+    // 🧹 CLEAR TABLE
     table.innerHTML = "";
 
-    projects
-      .filter(p =>
-        (!cat || p.category.includes(cat)) &&
-        (p.name.toLowerCase().includes(q) ||
-         p.intro.toLowerCase().includes(q))
-      )
-      .forEach(p => {
-        table.innerHTML += `
-          <tr>
-            <td>
-              <img src="${p.icon}" class="icon">
-              <a href="project.html?id=${p.id}">${p.name}</a>
-            </td>
-            <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
-            <td>
-              ${p.category.map(c =>
-                `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
-              ).join(" ")}
-            </td>
-            <td><a href="${p.twitter}" target="_blank">x.com</a></td>
-            <td>${p.intro}</td>
-          </tr>
-        `;
-      });
+    // 🧾 RENDER ROWS
+    list.forEach(p => {
+      table.innerHTML += `
+        <tr>
+          <td>
+            <img src="${p.icon}" class="icon">
+            <a href="project.html?id=${p.id}">${p.name}</a>
+          </td>
+          <td>
+            <a href="${p.website}" target="_blank">
+              ${p.website.replace("https://","")}
+            </a>
+          </td>
+          <td>
+            ${p.category.map(c =>
+              `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
+            ).join(" ")}
+          </td>
+          <td>
+            <a href="${p.twitter}" target="_blank">x.com</a>
+          </td>
+          <td>${p.intro}</td>
+        </tr>
+      `;
+    });
   }
 
-  search.oninput = render;
-  filter.onchange = render;
+  // 🔁 EVENT LISTENERS
+  search.addEventListener("input", render);
+  filter.addEventListener("change", render);
+  sort.addEventListener("change", render);
+
+  // 🚀 INITIAL RENDER
   render();
 </script>
-<script>
-  const toggle = document.getElementById("darkToggle");
-  const saved = localStorage.getItem("dark");
 
-  if (saved === "true") document.body.classList.add("dark");
-
-  toggle.onclick = () => {
-    document.body.classList.toggle("dark");
-    localStorage.setItem("dark", document.body.classList.contains("dark"));
-  };
-</script>
 
 </body>
 </html>
+
 
 
 
