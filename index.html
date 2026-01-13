@@ -50,6 +50,7 @@
     <option value="za">Name Z–A</option>
     <option value="date">Newest</option>
   </select>
+  <button id="exportCsv">Export CSV</button>
 </div>
 
 <table>
@@ -204,6 +205,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
   render();
 });
+  document.getElementById("exportCsv").onclick = () => {
+  let list = [...safeProjects];
+
+  const q = search.value.toLowerCase();
+  if (q) {
+    list = list.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.intro.toLowerCase().includes(q)
+    );
+  }
+
+  if (filter.value) {
+    list = list.filter(p => p.category.includes(filter.value));
+  }
+
+  if (sort.value === "az") {
+    list.sort((a,b) => a.name.localeCompare(b.name));
+  } else if (sort.value === "za") {
+    list.sort((a,b) => b.name.localeCompare(a.name));
+  } else if (sort.value === "date") {
+    list.sort((a,b) => new Date(b.date) - new Date(a.date));
+  }
+
+  const rows = [
+    ["Name", "Categories", "Website", "Twitter", "Intro"]
+  ];
+
+  list.forEach(p => {
+    rows.push([
+      p.name,
+      p.category.join("|"),
+      p.website,
+      p.twitter,
+      p.intro
+    ]);
+  });
+
+  const csv = rows.map(r =>
+    r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")
+  ).join("\n");
+
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "portfolio.csv";
+  a.click();
+
+  URL.revokeObjectURL(url);
+};
+
 </script>
 
 </body>
