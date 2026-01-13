@@ -167,6 +167,128 @@ h2 {
   background: #fff;
   cursor: pointer;
 }
+/* =========================
+   GLOBAL DARK MODE
+========================= */
+
+body.dark {
+  background-color: #0b1220;
+  color: #e5e7eb;
+}
+
+/* -------------------------
+   TEXT
+------------------------- */
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6 {
+  color: #f9fafb;
+}
+
+body.dark a {
+  color: #8ab4ff;
+}
+
+body.dark a:hover {
+  color: #a5c7ff;
+}
+
+/* -------------------------
+   HERO / HEADER
+------------------------- */
+
+body.dark .hero {
+  background: #0b1220;
+}
+
+body.dark .hero-content {
+  background: transparent;
+}
+
+body.dark .banner {
+  filter: brightness(0.6);
+}
+
+/* -------------------------
+   CONTROLS (SEARCH, SELECTS)
+------------------------- */
+
+body.dark input,
+body.dark select,
+body.dark button {
+  background-color: #111827;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+}
+
+body.dark input::placeholder {
+  color: #9ca3af;
+}
+
+body.dark button:hover {
+  background-color: #1f2937;
+}
+
+/* -------------------------
+   TABLE
+------------------------- */
+
+body.dark table {
+  background-color: #0b1220;
+  border-collapse: collapse;
+}
+
+body.dark thead th {
+  background-color: #111827;
+  color: #f9fafb;
+  border-bottom: 1px solid #374151;
+}
+
+body.dark tbody tr {
+  background-color: transparent;
+}
+
+body.dark tbody tr:hover {
+  background-color: #111827;
+}
+
+body.dark td,
+body.dark th {
+  color: #e5e7eb;
+  border-bottom: 1px solid #1f2937;
+}
+
+/* -------------------------
+   TAGS / BADGES
+------------------------- */
+
+body.dark .tag {
+  background-color: #1f2937 !important;
+  color: #e5e7eb;
+}
+
+/* -------------------------
+   PAGINATION
+------------------------- */
+
+body.dark .pagination button {
+  background-color: #111827;
+  color: #e5e7eb;
+  border: 1px solid #374151;
+}
+
+body.dark .pagination button:hover {
+  background-color: #1f2937;
+}
+
+/* -------------------------
+   PROJECT PAGE
+------------------------- */
+
 
 
 
