@@ -83,9 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const PAGE_SIZE = 10;
 
   const ADMIN_KEY = "admin_projects";
-  const safeProjects = localStorage.getItem(ADMIN_KEY)
-    ? JSON.parse(localStorage.getItem(ADMIN_KEY))
-    : projects;
+ window.safeProjects = localStorage.getItem(ADMIN_KEY)
+  ? JSON.parse(localStorage.getItem(ADMIN_KEY))
+  : projects;
+
 
   /* ------------------ DARK MODE ------------------ */
   const toggle = document.getElementById("darkToggle");
@@ -261,3 +262,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
