@@ -84,6 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
   window.safeProjects = localStorage.getItem(ADMIN_KEY)
     ? JSON.parse(localStorage.getItem(ADMIN_KEY))
     : projects;
+if (!Array.isArray(safeProjects)) {
+  console.error("Projects data failed to load");
+  return;
+}
 
   /* ---------------- DOM ---------------- */
   window.table  = document.getElementById("portfolio");
@@ -222,3 +226,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
