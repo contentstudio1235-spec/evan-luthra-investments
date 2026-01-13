@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Evan Luthra Investments</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- HEADER / INTRO -->
+<header class="hero">
+  <img src="assets/banner.jpg" class="banner" />
+
+  <div class="hero-content">
+    <img src="assets/logo.png" class="hero-logo" />
+
+    <h1>Evan Luthra Investments</h1>
+
+    <ul class="socials">
+      <li>📸 Instagram: <a href="https://instagram.com/EvanLuthra" target="_blank">instagram.com/EvanLuthra</a></li>
+      <li>🐦 Twitter: <a href="https://x.com/evanluthra" target="_blank">x.com/evanluthra</a></li>
+      <li>✈️ Telegram: <a href="https://t.me/EvanLuthraVIP" target="_blank">t.me/EvanLuthraVIP</a></li>
+      <li>🌐 Explore: <a href="https://evanluthra.com" target="_blank">evanluthra.com</a></li>
+    </ul>
+
+    <p class="contact">
+      If you would like an intro to any of these deals, feel free to reach out directly on email
+      <a href="mailto:Evan@EvanLuthra.com">Evan@EvanLuthra.com</a>
+    </p>
+
+    <p class="updated">Last Updated: 30th December, 2024</p>
+  </div>
+</header>
+
+<hr />
+
+<!-- PORTFOLIO -->
+<h2>💲 Portfolio</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Website</th>
+      <th>Category</th>
+      <th>Twitter</th>
+      <th>Company Intro</th>
+    </tr>
+  </thead>
+  <tbody id="portfolio"></tbody>
+</table>
+
+<script src="data.js"></script>
+<script>
+  const table = document.getElementById("portfolio");
+
+  projects.forEach(p => {
+    table.innerHTML += `
+      <tr>
+        <td>
+          <img src="${p.icon}" class="icon">
+          <a href="project.html?id=${p.id}">${p.name}</a>
+        </td>
+        <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
+        <td>${p.category.map(c => `<span class="tag">${c}</span>`).join(" ")}</td>
+        <td><a href="${p.twitter}" target="_blank">x.com</a></td>
+        <td>${p.intro}</td>
+      </tr>
+    `;
+  });
+</script>
+
+</body>
+</html>
