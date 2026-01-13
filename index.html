@@ -67,6 +67,11 @@
   </thead>
   <tbody id="portfolio"></tbody>
 </table>
+<div class="pagination">
+  <button id="prevPage">Prev</button>
+  <span id="pageInfo"></span>
+  <button id="nextPage">Next</button>
+</div>
 
 <!-- DATA MUST LOAD FIRST -->
 <script src="data.js"></script>
@@ -74,6 +79,8 @@
 <!-- APP LOGIC -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+let currentPage = 1;
+const PAGE_SIZE = 10;
 
     // ---- DARK MODE ----
     const toggle = document.getElementById("darkToggle");
@@ -103,6 +110,16 @@
 
     function render() {
       let list = [...projects];
+      document.getElementById("prevPage").onclick = () => {
+  currentPage--;
+  render();
+};
+
+document.getElementById("nextPage").onclick = () => {
+  currentPage++;
+  render();
+};
+
 
       const q = search.value.toLowerCase();
       if (q) {
@@ -126,21 +143,47 @@
         list.sort((a,b) => new Date(b.date) - new Date(a.date));
       }
 
-      table.innerHTML = "";
-      list.forEach(p => {
-        table.innerHTML += `
-          <tr>
-            <td><img src="${p.icon}" class="icon"> <a href="project.html?id=${p.id}">${p.name}</a></td>
-            <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
-            <td>${p.category.map(c =>
-              `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
-            ).join(" ")}</td>
-            <td><a href="${p.twitter}" target="_blank">x.com</a></td>
-            <td>${p.intro}</td>
-          </tr>
-        `;
-      });
-    }
+     const totalPages = Math.ceil(list.length / PAGE_SIZE);
+
+// Keep page in valid range
+currentPage = Math.min(Math.max(1, currentPage), totalPages || 1);
+
+// Slice data for current page
+const start = (currentPage - 1) * PAGE_SIZE;
+const pageItems = list.slice(start, start + PAGE_SIZE);
+
+// Clear table
+table.innerHTML = "";
+
+// Render only current page items
+pageItems.forEach(p => {
+  table.innerHTML += `
+    <tr>
+      <td>
+        <img src="${p.icon}" class="icon">
+        <a href="project.html?id=${p.id}">${p.name}</a>
+      </td>
+      <td>
+        <a href="${p.website}" target="_blank">
+          ${p.website.replace("https://","")}
+        </a>
+      </td>
+      <td>
+        ${p.category.map(c =>
+          `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
+        ).join(" ")}
+      </td>
+      <td>
+        <a href="${p.twitter}" target="_blank">x.com</a>
+      </td>
+      <td>${p.intro}</td>
+    </tr>
+  `;
+});
+
+// Update page indicator
+document.getElementById("pageInfo").textContent =
+  `Page ${currentPage} of ${totalPages || 1}`;
 
     search.oninput = render;
     filter.onchange = render;
@@ -152,4 +195,5 @@
 
 </body>
 </html>
+
 
