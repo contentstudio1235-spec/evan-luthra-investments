@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Project</title>
   <link rel="stylesheet" href="style.css" />
+
   <style>
     .project-page {
       max-width: 900px;
@@ -46,11 +47,6 @@
       font-size: 14px;
     }
 
-    .links a {
-      display: block;
-      margin-bottom: 6px;
-    }
-
     .divider {
       margin: 40px 0;
       border-bottom: 1px solid #eee;
@@ -62,126 +58,48 @@
       color: #6a00ff;
       text-decoration: none;
     }
-.breadcrumb {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 20px;
-}
 
-.breadcrumb a {
-  color: inherit;
-  text-decoration: none;
-}
+    .breadcrumb {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 20px;
+    }
 
-.breadcrumb span {
-  margin: 0 6px;
-}
+    .breadcrumb a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-body.dark .breadcrumb {
-  color: #aaa;
-}
+    .breadcrumb span {
+      margin: 0 6px;
+    }
 
-    body.dark .info-label { color: #aaa; }
-    body.dark .tag { background: #333; }
-    /* =========================
-   DARK MODE – PROJECT PAGE
-========================= */
+    /* ===== DARK MODE ===== */
 
-body.dark {
-  background-color: #0b1220;
-  color: #e5e7eb;
-}
+    body.dark {
+      background-color: #0b1220;
+      color: #e5e7eb;
+    }
 
-/* Page container */
-body.dark .project-page {
-  background-color: transparent;
-}
-
-/* Title */
-body.dark .project-title {
-  color: #f9fafb;
-}
-
-/* Breadcrumb */
-body.dark .breadcrumb {
-  color: #9ca3af;
-}
-
-body.dark .breadcrumb a {
-  color: #9ca3af;
-}
-
-body.dark .breadcrumb a:hover {
-  color: #c7d2fe;
-}
-
-/* Back link */
-body.dark .back-link {
-  color: #8ab4ff;
-}
-
-body.dark .back-link:hover {
-  color: #a5c7ff;
-}
-
-/* Info grid */
-body.dark .info-grid {
-  color: #e5e7eb;
-}
-
-/* Labels */
-body.dark .info-label {
-  color: #9ca3af;
-}
-
-/* Values */
-body.dark .info-grid div {
-  color: #e5e7eb;
-}
-
-/* Tags */
-body.dark .tag {
-  background-color: #1f2937;
-  color: #e5e7eb;
-}
-
-/* Links */
-body.dark a {
-  color: #8ab4ff;
-}
-
-body.dark a:hover {
-  color: #a5c7ff;
-}
-
-/* Divider */
-body.dark .divider {
-  border-bottom: 1px solid #1f2937;
-}
-
-/* Logo */
-body.dark .project-logo {
-  background: transparent;
-}
-
-/* Prevent random white blocks */
-body.dark div,
-body.dark section {
-  background-color: transparent;
-}
-
+    body.dark .info-label { color: #9ca3af; }
+    body.dark .tag { background: #1f2937; color: #e5e7eb; }
+    body.dark .divider { border-bottom-color: #1f2937; }
+    body.dark a { color: #8ab4ff; }
+    body.dark .breadcrumb { color: #9ca3af; }
+    body.dark .project-title { color: #f9fafb; }
   </style>
 </head>
+
 <body>
 
 <div class="project-page">
   <nav class="breadcrumb">
-  <a href="index.html">Evan Luthra Investments</a>
-  <span>/</span>
-  <a href="index.html#portfolio">Portfolio</a>
-  <span>/</span>
-  <span id="breadcrumbProject"></span>
-</nav>
+    <a href="index.html">Evan Luthra Investments</a>
+    <span>/</span>
+    <a href="index.html#portfolio">Portfolio</a>
+    <span>/</span>
+    <span id="breadcrumbProject"></span>
+  </nav>
 
   <a href="index.html" class="back-link">← Back to Portfolio</a>
 
@@ -191,23 +109,28 @@ body.dark section {
 <script src="data.js"></script>
 
 <script>
+  // Apply theme
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+  }
+
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
   const project = projects.find(p => p.id === id);
+  const container = document.getElementById("project");
 
   if (!project) {
-    document.getElementById("project").innerHTML =
-      "<h2>Project not found</h2>";
+    container.innerHTML = "<h2>Project not found</h2>";
   } else {
-   document.getElementById("project").innerHTML = `
-  ${project.icon ? `
-    <img src="${project.icon}" class="project-logo" alt="${project.name}" />
-  ` : ""}
+    document.getElementById("breadcrumbProject").textContent = project.name;
 
-  <h1 class="project-title">${project.name}</h1>
+    container.innerHTML = `
+      ${project.icon ? `<img src="${project.icon}" class="project-logo" alt="${project.name}">` : ""}
 
-  <div class="info-grid">
+      <h1 class="project-title">${project.name}</h1>
+
+      <div class="info-grid">
 
         <div class="info-label">Category</div>
         <div>${project.category.map(c => `<span class="tag">${c}</span>`).join(" ")}</div>
@@ -225,40 +148,17 @@ body.dark section {
         <div><span class="tag">${project.status || "—"}</span></div>
 
         <div class="info-label">Twitter</div>
-        <div>
-          ${project.twitter
-            ? `<a href="${project.twitter}" target="_blank">${project.twitter}</a>`
-            : "—"}
-        </div>
+        <div>${project.twitter ? `<a href="${project.twitter}" target="_blank">${project.twitter}</a>` : "—"}</div>
 
         <div class="info-label">Website</div>
-        <div>
-          ${project.website
-            ? `<a href="${project.website}" target="_blank">${project.website}</a>`
-            : "—"}
-        </div>
+        <div>${project.website ? `<a href="${project.website}" target="_blank">${project.website}</a>` : "—"}</div>
 
       </div>
 
       <div class="divider"></div>
     `;
   }
-  document.getElementById("breadcrumbProject").textContent = project.name;
-  document.body.classList.add("dark");
-
-  <script>
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-  }
 </script>
 
-
-</script>
-
-  
 </body>
 </html>
-
-
-
-
