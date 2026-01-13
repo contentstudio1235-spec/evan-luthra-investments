@@ -2,70 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Project Details</title>
+  <title>Project</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .project-wrap {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
+    .project-page {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 24px;
     }
 
-    .project-header {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .project-header img {
+    .project-logo {
+      display: block;
+      margin: 0 auto 24px;
       width: 80px;
       height: 80px;
       object-fit: contain;
     }
 
-    .tags span {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      background: #eee;
-      margin-right: 6px;
+    .project-title {
+      text-align: center;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 40px;
     }
 
-    .meta {
-      margin: 20px 0;
-      line-height: 1.8;
-    }
-
-    .meta a {
-      display: inline-block;
-      margin-right: 12px;
-    }
-
-    .gallery {
+    .info-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 30px;
+      grid-template-columns: 180px 1fr;
+      row-gap: 18px;
+      column-gap: 24px;
+      font-size: 16px;
     }
 
-    .gallery img {
-      width: 100%;
-      border-radius: 10px;
-      object-fit: cover;
+    .info-label {
+      color: #777;
     }
 
-    .back {
-      margin-bottom: 20px;
+    .tag {
       display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #eee;
+      font-size: 14px;
     }
+
+    .links a {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .divider {
+      margin: 40px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: #6a00ff;
+      text-decoration: none;
+    }
+
+    body.dark .info-label { color: #aaa; }
+    body.dark .tag { background: #333; }
   </style>
 </head>
 <body>
 
-<a class="back" href="index.html">← Back to Portfolio</a>
+<div class="project-page">
+  <a href="index.html" class="back-link">← Back to Portfolio</a>
 
-<div class="project-wrap" id="project"></div>
+  <div id="project"></div>
+</div>
 
 <script src="data.js"></script>
 
@@ -80,27 +88,47 @@
       "<h2>Project not found</h2>";
   } else {
     document.getElementById("project").innerHTML = `
-      <div class="project-header">
-        <img src="${project.icon}" alt="${project.name}" />
-        <h1>${project.name}</h1>
+      <img src="${project.icon}" class="project-logo" alt="${project.name}" />
+
+      <h1 class="project-title">${project.name}</h1>
+
+      <div class="info-grid">
+
+        <div class="info-label">Category</div>
+        <div>${project.category.map(c => `<span class="tag">${c}</span>`).join(" ")}</div>
+
+        <div class="info-label">Company Intro</div>
+        <div>${project.intro || "—"}</div>
+
+        <div class="info-label">Date</div>
+        <div>${project.date || "—"}</div>
+
+        <div class="info-label">Round Invested</div>
+        <div><span class="tag">${project.round || "—"}</span></div>
+
+        <div class="info-label">Status</div>
+        <div><span class="tag">${project.status || "—"}</span></div>
+
+        <div class="info-label">Twitter</div>
+        <div>
+          ${project.twitter
+            ? `<a href="${project.twitter}" target="_blank">${project.twitter}</a>`
+            : "—"}
+        </div>
+
+        <div class="info-label">Website</div>
+        <div>
+          ${project.website
+            ? `<a href="${project.website}" target="_blank">${project.website}</a>`
+            : "—"}
+        </div>
+
       </div>
 
-      <div class="tags">
-        ${project.category.map(c => `<span>${c}</span>`).join("")}
-      </div>
-
-      <p style="margin-top:16px;">${project.intro || ""}</p>
-
-      <div class="meta">
-        <strong>Date:</strong> ${project.date || "—"}<br />
-
-        ${project.website ? `<a href="${project.website}" target="_blank">🌐 Website</a>` : ""}
-        ${project.twitter ? `<a href="${project.twitter}" target="_blank">🐦 Twitter</a>` : ""}
-      </div>
+      <div class="divider"></div>
     `;
   }
 </script>
-
 
 </body>
 </html>
