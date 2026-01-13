@@ -52,7 +52,7 @@
   <button id="exportCsv">Export CSV</button>
 </div>
 
-<table>
+<table id="portfolio">
   <thead>
     <tr>
       <th>Name</th>
@@ -63,7 +63,7 @@
     </tr>
   </thead>
 
-  <!-- ✅ THIS WAS MISSING -->
+  <!-- ✅ REQUIRED -->
   <tbody id="tableBody"></tbody>
 </table>
 
@@ -93,7 +93,7 @@ if (!Array.isArray(safeProjects)) {
 }
 
   /* ---------------- DOM ---------------- */
-  window.table  = document.getElementById("portfolio");
+ window.table = document.getElementById("tableBody");
   window.search = document.getElementById("search");
   window.filter = document.getElementById("categoryFilter");
   window.sort   = document.getElementById("sort");
@@ -160,6 +160,7 @@ if (!Array.isArray(safeProjects)) {
   }
 
   function render() {
+    window.render = render;
     const list = getFilteredList();
 
     const totalPages = Math.ceil(list.length / PAGE_SIZE) || 1;
@@ -193,8 +194,18 @@ if (!Array.isArray(safeProjects)) {
   filter.onchange = () => { currentPage = 1; render(); };
   sort.onchange   = () => { currentPage = 1; render(); };
 
-  prevBtn.onclick = () => { currentPage--; render(); };
-  nextBtn.onclick = () => { currentPage++; render(); };
+ prevBtn.onclick = () => {
+  if (currentPage > 1) {
+    currentPage--;
+    render();
+  }
+};
+
+nextBtn.onclick = () => {
+  currentPage++;
+  render();
+};
+
 
   /* ---------------- CSV EXPORT ---------------- */
   exportBtn.addEventListener("click", () => {
@@ -229,5 +240,6 @@ if (!Array.isArray(safeProjects)) {
 
 </body>
 </html>
+
 
 
