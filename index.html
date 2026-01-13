@@ -108,12 +108,65 @@ const PAGE_SIZE = 10;
       filter.appendChild(opt);
     });
 
-    function render() {
-      let list = [...projects];
-      document.getElementById("prevPage").onclick = () => {
-  currentPage--;
-  render();
-};
+  function render() {
+  let list = [...safeProjects];
+
+  const q = search.value.toLowerCase();
+  if (q) {
+    list = list.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.intro.toLowerCase().includes(q)
+    );
+  }
+
+  if (filter.value) {
+    list = list.filter(p => p.category.includes(filter.value));
+  }
+
+  if (sort.value === "az") {
+    list.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sort.value === "za") {
+    list.sort((a, b) => b.name.localeCompare(a.name));
+  } else if (sort.value === "date") {
+    list.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+
+  const totalPages = Math.ceil(list.length / PAGE_SIZE) || 1;
+  currentPage = Math.min(Math.max(1, currentPage), totalPages);
+
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = list.slice(start, start + PAGE_SIZE);
+
+  table.innerHTML = "";
+
+  pageItems.forEach(p => {
+    table.innerHTML += `
+      <tr>
+        <td>
+          <img src="${p.icon}" class="icon">
+          <a href="project.html?id=${p.id}">${p.name}</a>
+        </td>
+        <td>
+          <a href="${p.website}" target="_blank">
+            ${p.website.replace("https://","")}
+          </a>
+        </td>
+        <td>
+          ${p.category.map(c =>
+            `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
+          ).join(" ")}
+        </td>
+        <td>
+          <a href="${p.twitter}" target="_blank">x.com</a>
+        </td>
+        <td>${p.intro}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("pageInfo").textContent =
+    `Page ${currentPage} of ${totalPages}`;
+}
 
 document.getElementById("nextPage").onclick = () => {
   currentPage++;
@@ -206,6 +259,7 @@ sort.onchange = () => {
 
 </body>
 </html>
+
 
 
 
