@@ -596,7 +596,7 @@ const projects = [
     status: "",
     website: "https://paramgaming.com",
     twitter: "https://x.com/ParamLaboratory",
-    icon: "icons/paramlabs.png"
+    icon: "icons/paramlabs.avif"
   },
   {
     id: "darewise-opal",
@@ -3059,3 +3059,4 @@ const projects = [
     icon: "icons/hypermove.png"
   }
 ];
+
