@@ -4,19 +4,16 @@
   <meta charset="UTF-8" />
   <title>Evan Luthra Investments</title>
   <link rel="stylesheet" href="style.css" />
- 
 </head>
 <body>
 
-<!-- HEADER / INTRO -->
 <header class="hero">
-  <img src="assets/banner.jpeg" class="banner" />
+  <img src="assets/banner.jpg" class="banner" />
 
   <div class="hero-content">
-    <img src="assets/logo.avif" class="hero-logo" />
+    <img src="assets/logo.png" class="hero-logo" />
 
     <h1>Evan Luthra Investments</h1>
-<button id="darkToggle" class="dark-toggle">🌙</button>
 
     <ul class="socials">
       <li>📸 Instagram: <a href="https://instagram.com/EvanLuthra" target="_blank">instagram.com/EvanLuthra</a></li>
@@ -31,10 +28,17 @@
     </p>
 
     <p class="updated">Last Updated: 30th December, 2024</p>
+
+    <!-- DARK MODE BUTTON -->
+    <button id="darkToggle" class="dark-toggle">🌙</button>
   </div>
 </header>
 
 <hr />
+
+<h2>💲 Portfolio</h2>
+
+<!-- CONTROLS -->
 <div class="controls">
   <input type="text" id="search" placeholder="Search projects…" />
 
@@ -49,11 +53,8 @@
     <option value="date">Newest</option>
   </select>
 </div>
->
 
-<!-- PORTFOLIO -->
-<h2>💲 Portfolio</h2>
-
+<!-- TABLE -->
 <table>
   <thead>
     <tr>
@@ -67,101 +68,87 @@
   <tbody id="portfolio"></tbody>
 </table>
 
+<!-- DATA MUST LOAD FIRST -->
 <script src="data.js"></script>
+
+<!-- APP LOGIC -->
 <script>
-  const table = document.getElementById("portfolio");
-  const search = document.getElementById("search");
-  const filter = document.getElementById("categoryFilter");
-  const sort = document.getElementById("sort");
+  document.addEventListener("DOMContentLoaded", () => {
 
-  // Populate category filter
-  const categories = new Set(projects.flatMap(p => p.category));
-  categories.forEach(c => {
-    const opt = document.createElement("option");
-    opt.value = c;
-    opt.textContent = c;
-    filter.appendChild(opt);
-  });
-
-  function render() {
-    const query = search.value.toLowerCase();
-    const selectedCategory = filter.value;
-    const sortValue = sort.value;
-
-    let list = [...projects];
-
-    // 🔍 SEARCH
-    list = list.filter(p =>
-      p.name.toLowerCase().includes(query) ||
-      p.intro.toLowerCase().includes(query)
-    );
-
-    // 🏷 CATEGORY FILTER
-    if (selectedCategory) {
-      list = list.filter(p => p.category.includes(selectedCategory));
+    // ---- DARK MODE ----
+    const toggle = document.getElementById("darkToggle");
+    if (localStorage.getItem("dark") === "true") {
+      document.body.classList.add("dark");
     }
+    toggle.onclick = () => {
+      document.body.classList.toggle("dark");
+      localStorage.setItem("dark", document.body.classList.contains("dark"));
+    };
 
-    // ↕ SORTING
-    if (sortValue === "az") {
-      list.sort((a, b) => a.name.localeCompare(b.name));
-    }
+    // ---- PORTFOLIO LOGIC ----
+    const table = document.getElementById("portfolio");
+    const search = document.getElementById("search");
+    const filter = document.getElementById("categoryFilter");
+    const sort = document.getElementById("sort");
 
-    if (sortValue === "za") {
-      list.sort((a, b) => b.name.localeCompare(a.name));
-    }
-
-    if (sortValue === "date") {
-      list.sort((a, b) => new Date(b.date) - new Date(a.date));
-    }
-
-    // 🧹 CLEAR TABLE
-    table.innerHTML = "";
-
-    // 🧾 RENDER ROWS
-    list.forEach(p => {
-      table.innerHTML += `
-        <tr>
-          <td>
-            <img src="${p.icon}" class="icon">
-            <a href="project.html?id=${p.id}">${p.name}</a>
-          </td>
-          <td>
-            <a href="${p.website}" target="_blank">
-              ${p.website.replace("https://","")}
-            </a>
-          </td>
-          <td>
-            ${p.category.map(c =>
-              `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
-            ).join(" ")}
-          </td>
-          <td>
-            <a href="${p.twitter}" target="_blank">x.com</a>
-          </td>
-          <td>${p.intro}</td>
-        </tr>
-      `;
+    // Populate categories safely
+    const cats = new Set();
+    projects.forEach(p => p.category.forEach(c => cats.add(c)));
+    cats.forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c;
+      filter.appendChild(opt);
     });
-  }
 
-  // 🔁 EVENT LISTENERS
-  search.addEventListener("input", render);
-  filter.addEventListener("change", render);
-  sort.addEventListener("change", render);
+    function render() {
+      let list = [...projects];
 
-  // 🚀 INITIAL RENDER
-  render();
+      const q = search.value.toLowerCase();
+      if (q) {
+        list = list.filter(p =>
+          p.name.toLowerCase().includes(q) ||
+          p.intro.toLowerCase().includes(q)
+        );
+      }
+
+      if (filter.value) {
+        list = list.filter(p => p.category.includes(filter.value));
+      }
+
+      if (sort.value === "az") {
+        list.sort((a,b) => a.name.localeCompare(b.name));
+      }
+      if (sort.value === "za") {
+        list.sort((a,b) => b.name.localeCompare(a.name));
+      }
+      if (sort.value === "date") {
+        list.sort((a,b) => new Date(b.date) - new Date(a.date));
+      }
+
+      table.innerHTML = "";
+      list.forEach(p => {
+        table.innerHTML += `
+          <tr>
+            <td><img src="${p.icon}" class="icon"> <a href="project.html?id=${p.id}">${p.name}</a></td>
+            <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
+            <td>${p.category.map(c =>
+              `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
+            ).join(" ")}</td>
+            <td><a href="${p.twitter}" target="_blank">x.com</a></td>
+            <td>${p.intro}</td>
+          </tr>
+        `;
+      });
+    }
+
+    search.oninput = render;
+    filter.onchange = render;
+    sort.onchange = render;
+
+    render(); // INITIAL RENDER
+  });
 </script>
-
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
