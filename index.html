@@ -2,276 +2,282 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Evan Luthra Investments</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Evan Luthra Investments – Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    /* =========================
+       BASE STYLES
+    ========================= */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #ffffff;
+      color: #111827;
+    }
+
+    body.dark {
+      background: #020617;
+      color: #e5e7eb;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    body.dark a {
+      color: #93c5fd;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+    .header {
+      padding: 40px;
+      background: linear-gradient(180deg, #020617, #020617);
+      color: white;
+    }
+
+    .header img {
+      width: 48px;
+      margin-bottom: 12px;
+    }
+
+    .header a {
+      color: #93c5fd;
+    }
+
+    /* =========================
+       CONTROLS BAR
+    ========================= */
+    .controls {
+      display: flex;
+      gap: 10px;
+      padding: 12px;
+      background: #ffffff;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+
+    body.dark .controls {
+      background: #020617;
+    }
+
+    input,
+    select,
+    button {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      font-size: 14px;
+    }
+
+    body.dark input,
+    body.dark select,
+    body.dark button {
+      background: #0f172a;
+      color: #e5e7eb;
+      border: 1px solid #334155;
+    }
+
+    input::placeholder {
+      color: #9ca3af;
+    }
+
+    button {
+      cursor: pointer;
+      background: #111827;
+      color: white;
+      border: none;
+    }
+
+    body.dark button {
+      background: #1f2937;
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    body.dark th,
+    body.dark td {
+      border-color: #1f2937;
+    }
+
+    body.dark th {
+      background: #020617;
+    }
+
+    /* =========================
+       PROJECT CELL
+    ========================= */
+    .project-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .project-cell img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    /* =========================
+       DARK MODE TOGGLE
+    ========================= */
+    .dark-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="dark-toggle" id="darkToggle">🌙</div>
 
-<header class="hero">
-  <img src="assets/banner.jpeg" class="banner" />
-
-  <div class="hero-content">
-    <img src="assets/logo.avif" class="hero-logo" />
+  <div class="header">
+    <img src="logo.png" alt="Logo" />
     <h1>Evan Luthra Investments</h1>
-
-    <ul class="socials">
-      <li>📸 Instagram: <a href="https://instagram.com/EvanLuthra" target="_blank">instagram.com/EvanLuthra</a></li>
-      <li>🐦 Twitter: <a href="https://x.com/evanluthra" target="_blank">x.com/evanluthra</a></li>
-      <li>✈️ Telegram: <a href="https://t.me/EvanLuthraVIP" target="_blank">t.me/EvanLuthraVIP</a></li>
-      <li>🌐 Explore: <a href="https://evanluthra.com" target="_blank">evanluthra.com</a></li>
-    </ul>
-
-    <p class="contact">
-      If you would like an intro to any of these deals, reach out at
-     <a href="mailto:Evan@EvanLuthra.com">Evan@EvanLuthra.com</a>
+    <p>
+      Instagram: <a href="https://instagram.com/EvanLuthra">instagram.com/EvanLuthra</a><br />
+      Twitter: <a href="https://x.com/evanluthra">x.com/evanluthra</a><br />
+      Website: <a href="https://evanluthra.com">evanluthra.com</a>
     </p>
-
-    <p class="updated">Last Updated: 30th December, 2024</p>
-    <button id="darkToggle" class="dark-toggle">🌙</button>
   </div>
-</header>
 
-<hr />
+  <div style="padding: 40px;">
+    <h2>💲 Portfolio</h2>
 
-<h2>💲 Portfolio</h2>
+    <div class="controls">
+      <input id="search" placeholder="Search projects..." />
+      <select id="categoryFilter">
+        <option value="">All Categories</option>
+      </select>
+      <select id="sort">
+        <option value="">Sort</option>
+        <option value="name">Name</option>
+      </select>
+      <button id="exportCsvBtn">Export CSV</button>
+    </div>
 
-<div class="controls">
-  <input type="text" id="search" placeholder="Search projects…" />
-
-  <select id="categoryFilter">
-    <option value="">All Categories</option>
-  </select>
-
-  <select id="sort">
-    <option value="">Sort</option>
-    <option value="az">Name A–Z</option>
-    <option value="za">Name Z–A</option>
-    <option value="date">Newest</option>
-  </select>
-
- <button id="exportCsvBtn">Export CSV</button>
-
-</div>
-
-<table id="portfolio">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Website</th>
-      <th>Category</th>
-      <th>Twitter</th>
-      <th>Company Intro</th>
-    </tr>
-  </thead>
-
-  <!-- ✅ REQUIRED -->
-  <tbody id="tableBody"></tbody>
-</table>
-
-
-<div class="pagination">
-  <button id="prevPage">Prev</button>
-  <span id="pageInfo"></span>
-  <button id="nextPage">Next</button>
-</div>
-
-<script src="data.js"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  /* ---------------- CONFIG ---------------- */
-  let currentPage = 1;
-  const PAGE_SIZE = 20;
-  const ADMIN_KEY = "admin_projects";
-
-  window.safeProjects = localStorage.getItem(ADMIN_KEY)
-    ? JSON.parse(localStorage.getItem(ADMIN_KEY))
-    : projects;
-if (!Array.isArray(safeProjects)) {
-  console.error("Projects data failed to load");
-  return;
-}
-
-  /* ---------------- DOM ---------------- */
- window.table = document.getElementById("tableBody");
-  window.search = document.getElementById("search");
-  window.filter = document.getElementById("categoryFilter");
-  window.sort   = document.getElementById("sort");
-
-  const prevBtn   = document.getElementById("prevPage");
-  const nextBtn   = document.getElementById("nextPage");
-  const exportBtn = document.getElementById("exportCsv");
-
-  /* ---------------- DARK MODE ---------------- */
-  const toggle = document.getElementById("darkToggle");
-  if (localStorage.getItem("dark") === "true") {
-    document.body.classList.add("dark");
-  }
-  toggle.onclick = () => {
-    document.body.classList.toggle("dark");
-    localStorage.setItem("dark", document.body.classList.contains("dark"));
-  };
-
-  /* ---------------- CATEGORY COLORS ---------------- */
-  const CATEGORY_COLORS = {
-    DePIN: "#e0f7fa",
-    Wallet: "#e3f2fd",
-    AI: "#fce4ec",
-    DApp: "#e8f5e9",
-    "Cross Chain": "#fff3e0",
-    L1: "#ede7f6"
-  };
-
-  /* ---------------- FILTER OPTIONS ---------------- */
-  const cats = new Set();
-  safeProjects.forEach(p => p.category.forEach(c => cats.add(c)));
-  cats.forEach(c => {
-    const opt = document.createElement("option");
-    opt.value = c;
-    opt.textContent = c;
-    filter.appendChild(opt);
-  });
-
-  /* ---------------- RENDER ---------------- */
-  function getFilteredList() {
-    let list = [...safeProjects];
-
-    const q = search.value.toLowerCase();
-    if (q) {
-      list = list.filter(p =>
-        p.name.toLowerCase().includes(q) ||
-        p.intro.toLowerCase().includes(q)
-      );
-    }
-
-    if (filter.value) {
-      list = list.filter(p => p.category.includes(filter.value));
-    }
-
-    if (sort.value === "az") {
-      list.sort((a,b) => a.name.localeCompare(b.name));
-    } else if (sort.value === "za") {
-      list.sort((a,b) => b.name.localeCompare(a.name));
-    } else if (sort.value === "date") {
-      list.sort((a,b) => new Date(b.date) - new Date(a.date));
-    }
-
-    return list;
-  }
-
-  function render() {
-    window.render = render;
-    const list = getFilteredList();
-
-    const totalPages = Math.ceil(list.length / PAGE_SIZE) || 1;
-    currentPage = Math.min(Math.max(1, currentPage), totalPages);
-
-    const start = (currentPage - 1) * PAGE_SIZE;
-    const pageItems = list.slice(start, start + PAGE_SIZE);
-
-    table.innerHTML = "";
-
-    pageItems.forEach(p => {
-     table.innerHTML += `
-  <tr>
-   <td>
-  <div class="project-cell">
-    ${p.icon ? `<img src="${p.icon}" class="icon" alt="">` : ""}
-    <a href="project.html?id=${p.id}" class="project-name">${p.name}</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Website</th>
+          <th>Category</th>
+          <th>Twitter</th>
+          <th>Company Intro</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
   </div>
-</td>
 
-    <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
-    <td>${p.category.map(c =>
-      `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
-    ).join(" ")}</td>
-    <td><a href="${p.twitter}" target="_blank">x.com</a></td>
-    <td>${p.intro}</td>
-  </tr>
-`;
-    });
-
-    document.getElementById("pageInfo").textContent =
-      `Page ${currentPage} of ${totalPages}`;
-  }
-
-  /* ---------------- EVENTS ---------------- */
-  search.oninput = () => { currentPage = 1; render(); };
-  filter.onchange = () => { currentPage = 1; render(); };
-  sort.onchange   = () => { currentPage = 1; render(); };
-
- prevBtn.onclick = () => {
-  if (currentPage > 1) {
-    currentPage--;
-    render();
-  }
-};
-
-nextBtn.onclick = () => {
-  currentPage++;
-  render();
-};
-
-
-  /* ---------------- CSV EXPORT ---------------- */
-  exportBtn.addEventListener("click", () => {
-    const list = getFilteredList();
-
-    const rows = [
-      ["Name","Categories","Website","Twitter","Intro"],
-      ...list.map(p => [
-        p.name,
-        p.category.join("|"),
-        p.website,
-        p.twitter,
-        p.intro
-      ])
-    ];
-
-    const csv = rows.map(r =>
-      r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")
-    ).join("\n");
-
-    const blob = new Blob([csv], { type: "text/csv" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "portfolio.csv";
-    a.click();
-    URL.revokeObjectURL(a.href);
-  });
-
-  render();
-});
   <script>
-  // ===== ADMIN VIA URL (?admin=true) =====
-  const params = new URLSearchParams(window.location.search);
+    document.addEventListener("DOMContentLoaded", () => {
+      /* =========================
+         DARK MODE
+      ========================= */
+      const toggle = document.getElementById("darkToggle");
+      if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+      }
 
-  if (params.get("admin") === "true") {
-    localStorage.setItem("role", "admin");
+      toggle.onclick = () => {
+        document.body.classList.toggle("dark");
+        localStorage.setItem(
+          "theme",
+          document.body.classList.contains("dark") ? "dark" : "light"
+        );
+      };
 
-    // Optional: clean URL after enabling admin
-    const cleanUrl = window.location.origin + window.location.pathname;
-    window.history.replaceState({}, document.title, cleanUrl);
-  }
+      /* =========================
+         ADMIN VIA URL (?admin=true)
+      ========================= */
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("admin") === "true") {
+        localStorage.setItem("role", "admin");
+        history.replaceState({}, document.title, location.pathname);
+      }
 
-  const isAdmin = localStorage.getItem("role") === "admin";
-  const exportBtn = document.getElementById("exportCsvBtn");
+      const isAdmin = localStorage.getItem("role") === "admin";
+      const exportBtn = document.getElementById("exportCsvBtn");
+      if (!isAdmin && exportBtn) exportBtn.style.display = "none";
 
-  if (!isAdmin && exportBtn) {
-    exportBtn.style.display = "none";
-  }
-</script>
+      /* =========================
+         SAMPLE DATA (replace with your real data)
+      ========================= */
+      const projects = [
+        {
+          id: "stratos-network",
+          name: "Stratos Network",
+          icon: "icons/stratos-network.png",
+          website: "https://www.thestratos.org",
+          category: "DePIN",
+          twitter: "https://x.com",
+          intro: "Building the next generation of decentralized data mesh"
+        },
+        {
+          id: "push-protocol",
+          name: "Push Protocol",
+          icon: "",
+          website: "https://push.org",
+          category: "Wallet",
+          twitter: "https://x.com",
+          intro: "Decentralized notifications and chats"
+        }
+      ];
 
-</script>
+      /* =========================
+         RENDER TABLE
+      ========================= */
+      const tbody = document.getElementById("tableBody");
 
+      function render(data) {
+        tbody.innerHTML = "";
+        data.forEach((p) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>
+              <div class="project-cell">
+                ${p.icon ? `<img src="${p.icon}" />` : ""}
+                <a href="project.html?id=${p.id}">${p.name}</a>
+              </div>
+            </td>
+            <td><a href="${p.website}" target="_blank">${p.website}</a></td>
+            <td>${p.category}</td>
+            <td><a href="${p.twitter}" target="_blank">x.com</a></td>
+            <td>${p.intro}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      render(projects);
+    });
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
