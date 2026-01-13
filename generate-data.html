@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CSV → data.js Generator</title>
+</head>
+<body>
+
+<h2>CSV → data.js</h2>
+<input type="file" id="file" accept=".csv" />
+<pre id="output"></pre>
+
+<script>
+document.getElementById("file").onchange = e => {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const lines = reader.result.split("\n").slice(1);
+    const projects = lines.filter(Boolean).map(l => {
+      const [id,name,categories,intro,website,twitter,status,round,date,icon] =
+        l.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/"/g,""));
+
+      return {
+        id,
+        name,
+        category: categories.split("|"),
+        intro,
+        website,
+        twitter,
+        status,
+        round,
+        date,
+        icon
+      };
+    });
+
+    document.getElementById("output").textContent =
+      "const projects = " + JSON.stringify(projects, null, 2);
+  };
+  reader.readAsText(e.target.files[0]);
+};
+</script>
+
+</body>
+</html>
