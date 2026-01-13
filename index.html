@@ -172,17 +172,20 @@ if (!Array.isArray(safeProjects)) {
     table.innerHTML = "";
 
     pageItems.forEach(p => {
-      table.innerHTML += `
-        <tr>
-          <td><img src="${p.icon}" class="icon"> <a href="project.html?id=${p.id}">${p.name}</a></td>
-          <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
-          <td>${p.category.map(c =>
-            `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
-          ).join(" ")}</td>
-          <td><a href="${p.twitter}" target="_blank">x.com</a></td>
-          <td>${p.intro}</td>
-        </tr>
-      `;
+     table.innerHTML += `
+  <tr>
+    <td>
+      ${p.icon ? `<img src="${p.icon}" class="icon">` : ""}
+      <a href="project.html?id=${p.id}">${p.name}</a>
+    </td>
+    <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
+    <td>${p.category.map(c =>
+      `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
+    ).join(" ")}</td>
+    <td><a href="${p.twitter}" target="_blank">x.com</a></td>
+    <td>${p.intro}</td>
+  </tr>
+`;
     });
 
     document.getElementById("pageInfo").textContent =
@@ -240,6 +243,7 @@ nextBtn.onclick = () => {
 
 </body>
 </html>
+
 
 
 
