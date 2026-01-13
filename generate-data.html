@@ -1,41 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>CSV → data.js Generator</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    pre {
+      background: #111;
+      color: #0f0;
+      padding: 16px;
+      overflow: auto;
+      max-height: 400px;
+      border-radius: 6px;
+    }
+    button {
+      margin-top: 12px;
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-<h2>CSV → data.js</h2>
+<h2>CSV → <code>data.js</code> Generator</h2>
+
+<p>
+Expected CSV columns (order doesn’t matter as long as headers match):
+</p>
+<pre>
+Name, Website, Category, Date, Round, Status, Twitter, Company Intro
+</pre>
+
 <input type="file" id="file" accept=".csv" />
+<br />
+<button id="download" disabled>Download data.js</button>
+
 <pre id="output"></pre>
 
 <script>
+function slugify(str) {
+  return str
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+let generatedJS = "";
+
 document.getElementById("file").onchange = e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
   const reader = new FileReader();
+
   reader.onload = () => {
-    const lines = reader.result.split("\n").slice(1);
-    const projects = lines.filter(Boolean).map(l => {
-      const [id,name,categories,intro,website,twitter,status,round,date,icon] =
-        l.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.replace(/"/g,""));
+    const text = reader.result.trim();
+    const lines = text.split(/\r?\n/);
+
+    const headers = lines[0]
+      .split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
+      .map(h => h.replace(/"/g, "").trim().toLowerCase());
+
+    const rows = lines.slice(1).filter(Boolean);
+
+    const projects = rows.map(line => {
+      const values = line
+        .split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
+        .map(v => v.replace(/^"|"$/g, "").trim());
+
+      const row = {};
+      headers.forEach((h, i) => (row[h] = values[i] || ""));
+
+      const id = slugify(row.name);
 
       return {
         id,
-        name,
-        category: categories.split("|"),
-        intro,
-        website,
-        twitter,
-        status,
-        round,
-        date,
-        icon
+        name: row.name,
+        category: row.category
+          ? row.category.split(",").map(c => c.trim())
+          : [],
+        intro: row["company intro"] || "",
+        date: row.date || "",
+        round: row.round || "",
+        status: row.status || "",
+        website: row.website
+          ? row.website.startsWith("http")
+            ? row.website
+            : "https://" + row.website
+          : "",
+        twitter: row.twitter || "",
+        icon: `icons/${id}.png`
       };
     });
 
-    document.getElementById("output").textContent =
-      "const projects = " + JSON.stringify(projects, null, 2);
+    generatedJS =
+`// data.js — AUTO-GENERATED (DO NOT EDIT MANUALLY)
+
+const projects = [
+${projects.map(p =>
+`  {
+    id: "${p.id}",
+    name: "${p.name.replace(/"/g, '\\"')}",
+    category: ${JSON.stringify(p.category)},
+    intro: "${p.intro.replace(/"/g, '\\"')}",
+    date: "${p.date}",
+    round: "${p.round}",
+    status: "${p.status}",
+    website: "${p.website}",
+    twitter: "${p.twitter}",
+    icon: "${p.icon}"
+  }`
+).join(",\n")}
+];
+`;
+
+    document.getElementById("output").textContent = generatedJS;
+    document.getElementById("download").disabled = false;
   };
-  reader.readAsText(e.target.files[0]);
+
+  reader.readAsText(file);
+};
+
+document.getElementById("download").onclick = () => {
+  const blob = new Blob([generatedJS], { type: "application/javascript" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "data.js";
+  a.click();
+  URL.revokeObjectURL(a.href);
 };
 </script>
 
