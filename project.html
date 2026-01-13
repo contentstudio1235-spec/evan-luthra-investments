@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Project</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a href="index.html">← Portfolio</a>
+
+<div id="project"></div>
+
+<script src="data.js"></script>
+<script>
+  const id = new URLSearchParams(window.location.search).get("id");
+  const p = projects.find(x => x.id === id);
+
+  document.getElementById("project").innerHTML = `
+    <img src="${p.icon}" class="logo">
+    <h1>${p.name}</h1>
+
+    <div class="details">
+      <p><b>Category:</b> ${p.category.join(", ")}</p>
+      <p><b>Company Intro:</b> ${p.intro}</p>
+      <p><b>Date:</b> ${p.date}</p>
+      <p><b>Round Invested:</b> <span class="badge">${p.round}</span></p>
+      <p><b>Status:</b> <span class="badge">${p.status}</span></p>
+      <p><b>Twitter:</b> <a href="${p.twitter}" target="_blank">${p.twitter}</a></p>
+      <p><b>Website:</b> <a href="${p.website}" target="_blank">${p.website}</a></p>
+    </div>
+  `;
+</script>
+
+</body>
+</html>
