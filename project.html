@@ -73,6 +73,13 @@
     .breadcrumb span {
       margin: 0 6px;
     }
+.project-logo {
+  display: block;
+  margin: 0 auto 24px;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
 
     /* ===== DARK MODE ===== */
 
@@ -125,10 +132,14 @@
   } else {
     document.getElementById("breadcrumbProject").textContent = project.name;
 
-    container.innerHTML = `
-      ${project.icon ? `<img src="${project.icon}" class="project-logo" alt="${project.name}">` : ""}
+   container.innerHTML = `
+  ${project.icon ? `
+    <img src="${project.icon}" class="project-logo" alt="${project.name}">
+  ` : ""}
 
-      <h1 class="project-title">${project.name}</h1>
+  <h1 class="project-title">${project.name}</h1>
+  ...
+`;
 
       <div class="info-grid">
 
@@ -162,3 +173,4 @@
 
 </body>
 </html>
+
