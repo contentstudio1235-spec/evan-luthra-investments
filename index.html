@@ -12,7 +12,6 @@
 
   <div class="hero-content">
     <img src="assets/logo.avif" class="hero-logo" />
-
     <h1>Evan Luthra Investments</h1>
 
     <ul class="socials">
@@ -23,12 +22,11 @@
     </ul>
 
     <p class="contact">
-      If you would like an intro to any of these deals, feel free to reach out directly on email
+      If you would like an intro to any of these deals, reach out at
       <a href="mailto:Evan@EvanLuthra.com">Evan@EvanLuthra.com</a>
     </p>
 
     <p class="updated">Last Updated: 30th December, 2024</p>
-
     <button id="darkToggle" class="dark-toggle">🌙</button>
   </div>
 </header>
@@ -50,6 +48,7 @@
     <option value="za">Name Z–A</option>
     <option value="date">Newest</option>
   </select>
+
   <button id="exportCsv">Export CSV</button>
 </div>
 
@@ -72,23 +71,31 @@
   <button id="nextPage">Next</button>
 </div>
 
-<!-- DATA -->
 <script src="data.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ------------------ CONFIG ------------------ */
+  /* ---------------- CONFIG ---------------- */
   let currentPage = 1;
   const PAGE_SIZE = 10;
-
   const ADMIN_KEY = "admin_projects";
- window.safeProjects = localStorage.getItem(ADMIN_KEY)
-  ? JSON.parse(localStorage.getItem(ADMIN_KEY))
-  : projects;
 
+  window.safeProjects = localStorage.getItem(ADMIN_KEY)
+    ? JSON.parse(localStorage.getItem(ADMIN_KEY))
+    : projects;
 
-  /* ------------------ DARK MODE ------------------ */
+  /* ---------------- DOM ---------------- */
+  window.table  = document.getElementById("portfolio");
+  window.search = document.getElementById("search");
+  window.filter = document.getElementById("categoryFilter");
+  window.sort   = document.getElementById("sort");
+
+  const prevBtn   = document.getElementById("prevPage");
+  const nextBtn   = document.getElementById("nextPage");
+  const exportBtn = document.getElementById("exportCsv");
+
+  /* ---------------- DARK MODE ---------------- */
   const toggle = document.getElementById("darkToggle");
   if (localStorage.getItem("dark") === "true") {
     document.body.classList.add("dark");
@@ -98,28 +105,17 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("dark", document.body.classList.contains("dark"));
   };
 
-  /* ------------------ ELEMENTS ------------------ */
- window.table  = document.getElementById("portfolio");
-window.search = document.getElementById("search");
-window.filter = document.getElementById("categoryFilter");
-window.sort   = document.getElementById("sort");
-
-
-  /* ------------------ CATEGORY COLORS ------------------ */
+  /* ---------------- CATEGORY COLORS ---------------- */
   const CATEGORY_COLORS = {
     DePIN: "#e0f7fa",
     Wallet: "#e3f2fd",
     AI: "#fce4ec",
     DApp: "#e8f5e9",
     "Cross Chain": "#fff3e0",
-    L1: "#ede7f6",
-    Restaking: "#f1f8e9",
-    Connectivity: "#f9fbe7",
-    "Liquid Staking": "#ede7f6",
-    defi: "#f3e5f5"
+    L1: "#ede7f6"
   };
 
-  /* ------------------ POPULATE FILTER ------------------ */
+  /* ---------------- FILTER OPTIONS ---------------- */
   const cats = new Set();
   safeProjects.forEach(p => p.category.forEach(c => cats.add(c)));
   cats.forEach(c => {
@@ -129,8 +125,8 @@ window.sort   = document.getElementById("sort");
     filter.appendChild(opt);
   });
 
-  /* ------------------ RENDER ------------------ */
-  function render() {
+  /* ---------------- RENDER ---------------- */
+  function getFilteredList() {
     let list = [...safeProjects];
 
     const q = search.value.toLowerCase();
@@ -153,6 +149,12 @@ window.sort   = document.getElementById("sort");
       list.sort((a,b) => new Date(b.date) - new Date(a.date));
     }
 
+    return list;
+  }
+
+  function render() {
+    const list = getFilteredList();
+
     const totalPages = Math.ceil(list.length / PAGE_SIZE) || 1;
     currentPage = Math.min(Math.max(1, currentPage), totalPages);
 
@@ -164,23 +166,12 @@ window.sort   = document.getElementById("sort");
     pageItems.forEach(p => {
       table.innerHTML += `
         <tr>
-          <td>
-            <img src="${p.icon}" class="icon">
-            <a href="project.html?id=${p.id}">${p.name}</a>
-          </td>
-          <td>
-            <a href="${p.website}" target="_blank">
-              ${p.website.replace("https://","")}
-            </a>
-          </td>
-          <td>
-            ${p.category.map(c =>
-              `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
-            ).join(" ")}
-          </td>
-          <td>
-            <a href="${p.twitter}" target="_blank">x.com</a>
-          </td>
+          <td><img src="${p.icon}" class="icon"> <a href="project.html?id=${p.id}">${p.name}</a></td>
+          <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
+          <td>${p.category.map(c =>
+            `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
+          ).join(" ")}</td>
+          <td><a href="${p.twitter}" target="_blank">x.com</a></td>
           <td>${p.intro}</td>
         </tr>
       `;
@@ -190,79 +181,44 @@ window.sort   = document.getElementById("sort");
       `Page ${currentPage} of ${totalPages}`;
   }
 
-  /* ------------------ EVENTS ------------------ */
+  /* ---------------- EVENTS ---------------- */
   search.oninput = () => { currentPage = 1; render(); };
   filter.onchange = () => { currentPage = 1; render(); };
   sort.onchange   = () => { currentPage = 1; render(); };
 
-  document.getElementById("prevPage").onclick = () => {
-    currentPage--;
-    render();
-  };
+  prevBtn.onclick = () => { currentPage--; render(); };
+  nextBtn.onclick = () => { currentPage++; render(); };
 
-  document.getElementById("nextPage").onclick = () => {
-    currentPage++;
-    render();
-  };
+  /* ---------------- CSV EXPORT ---------------- */
+  exportBtn.addEventListener("click", () => {
+    const list = getFilteredList();
+
+    const rows = [
+      ["Name","Categories","Website","Twitter","Intro"],
+      ...list.map(p => [
+        p.name,
+        p.category.join("|"),
+        p.website,
+        p.twitter,
+        p.intro
+      ])
+    ];
+
+    const csv = rows.map(r =>
+      r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")
+    ).join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "portfolio.csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
 
   render();
 });
-  document.getElementById("exportCsv")
-  let list = [...safeProjects];
-
-  const q = search.value.toLowerCase();
-  if (q) {
-    list = list.filter(p =>
-      p.name.toLowerCase().includes(q) ||
-      p.intro.toLowerCase().includes(q)
-    );
-  }
-
-  if (filter.value) {
-    list = list.filter(p => p.category.includes(filter.value));
-  }
-
-  if (sort.value === "az") {
-    list.sort((a,b) => a.name.localeCompare(b.name));
-  } else if (sort.value === "za") {
-    list.sort((a,b) => b.name.localeCompare(a.name));
-  } else if (sort.value === "date") {
-    list.sort((a,b) => new Date(b.date) - new Date(a.date));
-  }
-
-  const rows = [
-    ["Name", "Categories", "Website", "Twitter", "Intro"]
-  ];
-
-  list.forEach(p => {
-    rows.push([
-      p.name,
-      p.category.join("|"),
-      p.website,
-      p.twitter,
-      p.intro
-    ]);
-  });
-
-  const csv = rows.map(r =>
-    r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")
-  ).join("\n");
-
-  const blob = new Blob([csv], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "portfolio.csv";
-  a.click();
-
-  URL.revokeObjectURL(url);
-};
-
 </script>
 
 </body>
 </html>
-
-
-
