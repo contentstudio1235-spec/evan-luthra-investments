@@ -60,23 +60,56 @@
 <script src="data.js"></script>
 <script>
   const table = document.getElementById("portfolio");
+  const search = document.getElementById("search");
+  const filter = document.getElementById("categoryFilter");
 
-  projects.forEach(p => {
-    table.innerHTML += `
-      <tr>
-        <td>
-          <img src="${p.icon}" class="icon">
-          <a href="project.html?id=${p.id}">${p.name}</a>
-        </td>
-        <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
-        <td>${p.category.map(c => `<span class="tag">${c}</span>`).join(" ")}</td>
-        <td><a href="${p.twitter}" target="_blank">x.com</a></td>
-        <td>${p.intro}</td>
-      </tr>
-    `;
+  // populate filter dropdown
+  const categories = new Set(projects.flatMap(p => p.category));
+  categories.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c;
+    opt.textContent = c;
+    filter.appendChild(opt);
   });
+
+  function render() {
+    const q = search.value.toLowerCase();
+    const cat = filter.value;
+
+    table.innerHTML = "";
+
+    projects
+      .filter(p =>
+        (!cat || p.category.includes(cat)) &&
+        (p.name.toLowerCase().includes(q) ||
+         p.intro.toLowerCase().includes(q))
+      )
+      .forEach(p => {
+        table.innerHTML += `
+          <tr>
+            <td>
+              <img src="${p.icon}" class="icon">
+              <a href="project.html?id=${p.id}">${p.name}</a>
+            </td>
+            <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
+            <td>
+              ${p.category.map(c =>
+                `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
+              ).join(" ")}
+            </td>
+            <td><a href="${p.twitter}" target="_blank">x.com</a></td>
+            <td>${p.intro}</td>
+          </tr>
+        `;
+      });
+  }
+
+  search.oninput = render;
+  filter.onchange = render;
+  render();
 </script>
 
 </body>
 </html>
+
 
