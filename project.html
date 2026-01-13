@@ -244,11 +244,21 @@ body.dark section {
     `;
   }
   document.getElementById("breadcrumbProject").textContent = project.name;
+  document.body.classList.add("dark");
+
+  <script>
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+  }
+</script>
+
+
 </script>
 
   
 </body>
 </html>
+
 
 
 
