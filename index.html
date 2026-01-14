@@ -7,11 +7,20 @@
 </head>
 <body>
 
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <img src="assets/logo.avif" class="topbar-logo" alt="KOL Capital" />
+    <span class="topbar-title">Evan Luthra Investments</span>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
 <header class="hero">
-  <img src="assets/banner.jpeg" class="banner" />
+  <img src="assets/banner.jpeg" class="banner" alt="Banner" />
 
   <div class="hero-content">
-    <img src="assets/logo.avif" class="hero-logo" />
+    <img src="assets/logo.avif" class="hero-logo" alt="KOL Capital" />
     <h1>Evan Luthra Investments</h1>
 
     <ul class="socials">
@@ -23,15 +32,16 @@
 
     <p class="contact">
       If you would like an intro to any of these deals, reach out at
-     <a href="mailto:Evan@EvanLuthra.com">Evan@EvanLuthra.com</a>
+      <a href="mailto:Evan@EvanLuthra.com">Evan@EvanLuthra.com</a>
     </p>
-    
+
     <button id="darkToggle" class="dark-toggle">🌙</button>
   </div>
 </header>
 
 <hr />
 
+<!-- ================= PORTFOLIO ================= -->
 <h2>💲 Portfolio</h2>
 
 <div class="controls">
@@ -61,11 +71,8 @@
       <th>Company Intro</th>
     </tr>
   </thead>
-
-  <!-- ✅ REQUIRED -->
   <tbody id="tableBody"></tbody>
 </table>
-
 
 <div class="pagination">
   <button id="prevPage">Prev</button>
@@ -73,12 +80,12 @@
   <button id="nextPage">Next</button>
 </div>
 
+<!-- ================= DATA ================= -->
 <script src="data.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ---------------- CONFIG ---------------- */
   let currentPage = 1;
   const PAGE_SIZE = 256;
   const ADMIN_KEY = "admin_projects";
@@ -86,22 +93,22 @@ document.addEventListener("DOMContentLoaded", () => {
   window.safeProjects = localStorage.getItem(ADMIN_KEY)
     ? JSON.parse(localStorage.getItem(ADMIN_KEY))
     : projects;
-if (!Array.isArray(safeProjects)) {
-  console.error("Projects data failed to load");
-  return;
-}
 
-  /* ---------------- DOM ---------------- */
- window.table = document.getElementById("tableBody");
-  window.search = document.getElementById("search");
-  window.filter = document.getElementById("categoryFilter");
-  window.sort   = document.getElementById("sort");
+  if (!Array.isArray(safeProjects)) {
+    console.error("Projects data failed to load");
+    return;
+  }
+
+  const table  = document.getElementById("tableBody");
+  const search = document.getElementById("search");
+  const filter = document.getElementById("categoryFilter");
+  const sort   = document.getElementById("sort");
 
   const prevBtn   = document.getElementById("prevPage");
   const nextBtn   = document.getElementById("nextPage");
   const exportBtn = document.getElementById("exportCsv");
 
-  /* ---------------- DARK MODE ---------------- */
+  /* ---------- DARK MODE ---------- */
   const toggle = document.getElementById("darkToggle");
   if (localStorage.getItem("dark") === "true") {
     document.body.classList.add("dark");
@@ -111,7 +118,7 @@ if (!Array.isArray(safeProjects)) {
     localStorage.setItem("dark", document.body.classList.contains("dark"));
   };
 
-  /* ---------------- CATEGORY COLORS ---------------- */
+  /* ---------- CATEGORY COLORS ---------- */
   const CATEGORY_COLORS = {
     DePIN: "#e0f7fa",
     Wallet: "#e3f2fd",
@@ -121,7 +128,7 @@ if (!Array.isArray(safeProjects)) {
     L1: "#ede7f6"
   };
 
-  /* ---------------- FILTER OPTIONS ---------------- */
+  /* ---------- FILTER OPTIONS ---------- */
   const cats = new Set();
   safeProjects.forEach(p => p.category.forEach(c => cats.add(c)));
   cats.forEach(c => {
@@ -131,7 +138,6 @@ if (!Array.isArray(safeProjects)) {
     filter.appendChild(opt);
   });
 
-  /* ---------------- RENDER ---------------- */
   function getFilteredList() {
     let list = [...safeProjects];
 
@@ -147,21 +153,15 @@ if (!Array.isArray(safeProjects)) {
       list = list.filter(p => p.category.includes(filter.value));
     }
 
-    if (sort.value === "az") {
-      list.sort((a,b) => a.name.localeCompare(b.name));
-    } else if (sort.value === "za") {
-      list.sort((a,b) => b.name.localeCompare(a.name));
-    } else if (sort.value === "date") {
-      list.sort((a,b) => new Date(b.date) - new Date(a.date));
-    }
+    if (sort.value === "az") list.sort((a,b) => a.name.localeCompare(b.name));
+    if (sort.value === "za") list.sort((a,b) => b.name.localeCompare(a.name));
+    if (sort.value === "date") list.sort((a,b) => new Date(b.date) - new Date(a.date));
 
     return list;
   }
 
   function render() {
-    window.render = render;
     const list = getFilteredList();
-
     const totalPages = Math.ceil(list.length / PAGE_SIZE) || 1;
     currentPage = Math.min(Math.max(1, currentPage), totalPages);
 
@@ -171,54 +171,38 @@ if (!Array.isArray(safeProjects)) {
     table.innerHTML = "";
 
     pageItems.forEach(p => {
-     table.innerHTML += `
-  <tr>
-   <td>
-  <div class="project-cell">
-    ${p.icon ? `<img src="${p.icon}" class="icon" alt="">` : ""}
-    <a href="project.html?id=${p.id}" class="project-name">${p.name}</a>
-  </div>
-</td>
-
-    <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
-    <td>${p.category.map(c =>
-      `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
-    ).join(" ")}</td>
-    <td><a href="${p.twitter}" target="_blank">x.com</a></td>
-    <td>${p.intro}</td>
-  </tr>
-`;
+      table.innerHTML += `
+      <tr>
+        <td>
+          <div class="project-cell">
+            ${p.icon ? `<img src="${p.icon}" class="icon">` : ""}
+            <a href="project.html?id=${p.id}">${p.name}</a>
+          </div>
+        </td>
+        <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
+        <td>${p.category.map(c =>
+          `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
+        ).join(" ")}</td>
+        <td><a href="${p.twitter}" target="_blank">x.com</a></td>
+        <td>${p.intro}</td>
+      </tr>`;
     });
 
     document.getElementById("pageInfo").textContent =
       `Page ${currentPage} of ${totalPages}`;
   }
 
-  /* ---------------- EVENTS ---------------- */
   search.oninput = () => { currentPage = 1; render(); };
   filter.onchange = () => { currentPage = 1; render(); };
   sort.onchange   = () => { currentPage = 1; render(); };
 
- prevBtn.onclick = () => {
-  if (currentPage > 1) {
-    currentPage--;
-    render();
-  }
-};
+  prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; render(); } };
+  nextBtn.onclick = () => { currentPage++; render(); };
 
-nextBtn.onclick = () => {
-  currentPage++;
-  render();
-};
-
-
-  /* ---------------- CSV EXPORT ---------------- */
-  exportBtn.addEventListener("click", () => {
-    const list = getFilteredList();
-
+  exportBtn.onclick = () => {
     const rows = [
       ["Name","Categories","Website","Twitter","Intro"],
-      ...list.map(p => [
+      ...getFilteredList().map(p => [
         p.name,
         p.category.join("|"),
         p.website,
@@ -227,17 +211,13 @@ nextBtn.onclick = () => {
       ])
     ];
 
-    const csv = rows.map(r =>
-      r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")
-    ).join("\n");
-
+    const csv = rows.map(r => r.map(v => `"${v}"`).join(",")).join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = "portfolio.csv";
     a.click();
-    URL.revokeObjectURL(a.href);
-  });
+  };
 
   render();
 });
@@ -245,10 +225,3 @@ nextBtn.onclick = () => {
 
 </body>
 </html>
-
-
-
-
-
-
-
