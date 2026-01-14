@@ -434,13 +434,6 @@ body.dark .controls {
   padding: 80px 20px 40px;
 }
 
-/* Wrapper aligns divider with portfolio/table width */
-.divider-wrap {
-  max-width: 1100px;      /* same as portfolio table */
-  margin: 24px auto 40px; /* centers it */
-  padding: 0 20px;        /* matches table padding */
-}
-
 /* Grey block (bigger like original) */
 .section-divider {
   width: 100%;
@@ -455,6 +448,78 @@ body.dark .controls {
   background: #cfcfcf;
 }
 
+/* shared page width (matches portfolio table) */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* divider wrapper aligned to table */
+.divider-wrap {
+  max-width: 1100px;
+  margin: 24px auto 32px;
+  padding: 0 24px;
+}
+
+/* THIN LINE under it */
+.section-line {
+  margin-top: 10px;
+  height: 1px;
+  background: #d0d0d0;
+}
+
+/* dark mode versions */
+body.dark .section-divider {
+  background: #2a2a2a;
+}
+
+body.dark .section-line {
+  background: #3a3a3a;
+}
+
+.top-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  width: 22px;
+  height: 22px;
+}
+
+.dark-toggle {
+  border: none;
+  background: #f3f3f3;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+body.dark .top-header {
+  background: #121212;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+body.dark .dark-toggle {
+  background: #2a2a2a;
+  color: #fff;
+}
 
 
 
