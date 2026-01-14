@@ -304,5 +304,11 @@ header img,
   overflow: hidden;
   position: relative;
 }
+/* GLOBAL IMAGE SAFETY */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 
 
