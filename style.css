@@ -57,6 +57,13 @@ body.dark .top-header {
   height: 22px;
 }
 
+/* ===== Header logo (small, fixed) ===== */
+.top-header .brand img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
 /* ===============================
    DARK MODE TOGGLE
 ================================ */
@@ -263,3 +270,4 @@ td img.icon {
     font-size: 14px;
   }
 }
+
