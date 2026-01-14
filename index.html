@@ -25,8 +25,7 @@
       If you would like an intro to any of these deals, reach out at
      <a href="mailto:Evan@EvanLuthra.com">Evan@EvanLuthra.com</a>
     </p>
-
-    <p class="updated">Last Updated: 30th December, 2024</p>
+    
     <button id="darkToggle" class="dark-toggle">🌙</button>
   </div>
 </header>
@@ -81,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ---------------- CONFIG ---------------- */
   let currentPage = 1;
-  const PAGE_SIZE = 20;
+  const PAGE_SIZE = 256;
   const ADMIN_KEY = "admin_projects";
 
   window.safeProjects = localStorage.getItem(ADMIN_KEY)
@@ -246,6 +245,7 @@ nextBtn.onclick = () => {
 
 </body>
 </html>
+
 
 
 
