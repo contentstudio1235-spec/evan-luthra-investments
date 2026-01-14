@@ -279,4 +279,30 @@ header img,
 }
 
 
+/* ================================
+   HERO / BANNER LOGO ONLY
+   ================================ */
+.hero-logo {
+  position: absolute !important;
+  left: 24px;
+  bottom: -56px;
+  width: 120px !important;
+  height: 120px !important;
+  max-width: 120px !important;
+  max-height: 120px !important;
+  object-fit: contain;
+  z-index: 5;
+}
+/* ================================
+   HERO BANNER HEIGHT FIX
+   ================================ */
+.hero,
+.hero-banner,
+.banner {
+  height: 280px !important;
+  max-height: 280px !important;
+  overflow: hidden;
+  position: relative;
+}
+
 
