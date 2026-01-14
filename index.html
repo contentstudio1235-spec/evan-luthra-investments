@@ -13,10 +13,6 @@
       <img src="assets/logo.avif" alt="KOL Capital">
       <span>Evan Luthra Investments</span>
     </div>
-
-    <button id="darkToggle" class="dark-toggle" title="Toggle dark mode">
-      🌙
-    </button>
   </div>
 </header>
 
@@ -232,11 +228,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   render();
 });
-  <script>
 document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.getElementById("darkToggle");
 
-  // DEFAULT TO DARK MODE
   if (!localStorage.getItem("dark")) {
     localStorage.setItem("dark", "true");
   }
@@ -253,12 +247,12 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   };
 });
-</script>
 
 </script>
 
 </body>
 </html>
+
 
 
 
