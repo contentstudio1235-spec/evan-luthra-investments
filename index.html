@@ -233,10 +233,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   render();
 });
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("darkToggle");
+
+  // DEFAULT TO DARK MODE
+  if (!localStorage.getItem("dark")) {
+    localStorage.setItem("dark", "true");
+  }
+
+  if (localStorage.getItem("dark") === "true") {
+    document.body.classList.add("dark");
+  }
+
+  toggle.onclick = () => {
+    document.body.classList.toggle("dark");
+    localStorage.setItem(
+      "dark",
+      document.body.classList.contains("dark")
+    );
+  };
+});
+</script>
+
 </script>
 
 </body>
 </html>
+
 
 
 
