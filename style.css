@@ -55,13 +55,7 @@ body.dark .top-header {
 .brand img {
   width: 22px;
   height: 22px;
-}
-
-/* ===== Header logo (small, fixed) ===== */
-.top-header .brand img {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
+object-fit: contain;
 }
 
 /* ===============================
@@ -270,4 +264,5 @@ td img.icon {
     font-size: 14px;
   }
 }
+
 
