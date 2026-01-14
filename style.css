@@ -1,7 +1,6 @@
-/* =========================
-   GLOBAL RESET & VARIABLES
-   ========================= */
-
+/* ===============================
+   RESET + BASE
+================================ */
 * {
   box-sizing: border-box;
 }
@@ -9,302 +8,258 @@
 html, body {
   margin: 0;
   padding: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background: #ffffff;
   color: #111;
 }
-
-/* =========================
-   DARK MODE BASE
-   ========================= */
 
 body.dark {
   background: #0b1220;
   color: #e5e7eb;
 }
 
-body.dark a {
-  color: #8ab4ff;
-}
-
-/* =========================
+/* ===============================
    TOP HEADER
-   ========================= */
-
+================================ */
 .top-header {
   position: sticky;
   top: 0;
-  z-index: 1000;
-  background: #0b1220;
-  height: 56px;
-  display: flex;
-  align-items: center;
+  z-index: 50;
+  height: 52px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.header-inner {
-  max-width: 1100px;
+body.dark .top-header {
+  background: #0b1220;
+  border-color: #1f2937;
+}
+
+.top-header-inner {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 100%;
-}
-
-.header-logo {
-  width: 24px;
-  height: 24px;
-}
-
-.header-title {
-  font-size: 16px;
   font-weight: 600;
-  color: #fff;
 }
 
-body.dark .header-title {
-  color: #fff;
+.brand img {
+  width: 22px;
+  height: 22px;
 }
 
-/* Dark mode toggle */
-.dark-toggle {
-  margin-left: auto;
+/* ===============================
+   DARK MODE TOGGLE
+================================ */
+#darkToggle {
   cursor: pointer;
-  background: #fff;
   border: none;
+  background: #f3f4f6;
   border-radius: 8px;
-  padding: 6px 8px;
+  padding: 6px 10px;
 }
 
-body.dark .dark-toggle {
+body.dark #darkToggle {
   background: #1f2937;
   color: #fff;
 }
 
-/* =========================
-   HERO / BANNER
-   ========================= */
-
+/* ===============================
+   HERO BANNER (FIXED)
+================================ */
 .hero {
-  position: relative;
-  height: 320px;
+  position: relative;      /* CRITICAL */
+  width: 100%;
+  height: 320px;           /* FIXED HEIGHT */
   background: url("banner.jpg") center / cover no-repeat;
-  overflow: visible;
+  overflow: hidden;
 }
 
-/* Overlay logo (NO stroke, NO box) */
+/* KOL logo overlay */
 .hero-logo {
   position: absolute;
   left: 24px;
-  bottom: -70px;
-  width: 140px;
-  height: 140px;
+  bottom: -48px;           /* half over banner */
+  width: 120px;
+  height: 120px;
+  border-radius: 0;        /* NO STROKE */
   background: none;
-  border: none;
-  box-shadow: none;
-  z-index: 5;
 }
 
-/* =========================
-   HERO CONTENT
-   ========================= */
-
-.hero-content {
-  max-width: 1100px;
+/* ===============================
+   MAIN CONTENT WRAPPER
+================================ */
+main {
+  position: relative;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 90px 24px 40px;
+  padding: 0 24px 64px;
+}
+
+/* ===============================
+   HERO CONTENT (TEXT)
+================================ */
+.hero-content {
+  margin-top: 72px;
 }
 
 .hero-content h1 {
   font-size: 42px;
-  font-weight: 700;
   margin: 0 0 16px;
 }
 
-.hero-content p {
-  margin: 10px 0;
+body.dark .hero-content h1 {
+  color: #fff;
 }
 
-body.dark .hero-content,
-body.dark .hero-content h1,
-body.dark .hero-content p,
-body.dark .hero-content li {
-  color: #e5e7eb;
-}
-
-/* =========================
-   SOCIAL LINKS
-   ========================= */
-
-.social-list {
+.socials {
   list-style: none;
   padding: 0;
-  margin: 0 0 12px;
+  margin: 0 0 16px;
 }
 
-.social-list li {
-  margin: 6px 0;
+.socials li {
+  margin-bottom: 6px;
 }
 
-.social-list a {
-  text-decoration: underline;
+.socials a {
+  color: #2563eb;
+  text-decoration: none;
 }
 
-/* =========================
-   CONTACT
-   ========================= */
-
-.contact {
-  margin-top: 12px;
+body.dark .socials a {
+  color: #60a5fa;
 }
 
-/* =========================
-   SECTION DIVIDER BLOCK
-   ========================= */
-
+/* ===============================
+   SECTION DIVIDER (GRAY BLOCK)
+================================ */
 .section-divider {
-  max-width: 1100px;
-  margin: 24px auto 40px;
-  padding: 0 24px;
+  margin: 32px 0;
 }
 
 .section-divider .block {
-  height: 60px;
+  height: 48px;           /* DOUBLE HEIGHT */
   background: #e5e5e5;
   border-radius: 4px;
 }
 
 body.dark .section-divider .block {
-  background: #2a2a2a;
+  background: #1f2937;
 }
 
-/* REMOVE any stray lines */
-.divider-line,
-.section-line,
-hr {
-  display: none;
-}
-
-/* =========================
-   PORTFOLIO SECTION
-   ========================= */
-
+/* ===============================
+   PORTFOLIO
+================================ */
 .portfolio {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 24px 80px;
+  margin-top: 32px;
 }
 
 .portfolio h2 {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 22px;
-  margin-bottom: 16px;
 }
 
-/* =========================
-   CONTROLS
-   ========================= */
-
+/* Controls */
 .controls {
   display: flex;
-  flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 16px;
+  margin: 16px 0;
+  flex-wrap: wrap;
 }
 
 .controls input,
 .controls select,
 .controls button {
   padding: 8px 12px;
-  font-size: 14px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5db;
 }
 
 body.dark .controls input,
 body.dark .controls select,
 body.dark .controls button {
-  background: #111827;
+  background: #0b1220;
   color: #e5e7eb;
-  border-color: #374151;
+  border-color: #1f2937;
 }
 
-/* =========================
+/* ===============================
    TABLE
-   ========================= */
-
+================================ */
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 16px;
 }
 
-thead th {
+th, td {
   text-align: left;
-  font-size: 14px;
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-tbody td {
-  padding: 10px;
-  vertical-align: top;
-  border-bottom: 1px solid #eee;
+body.dark th,
+body.dark td {
+  border-color: #1f2937;
 }
 
-body.dark thead th {
-  border-color: #374151;
-}
-
-body.dark tbody td {
-  border-color: #374151;
-}
-
-/* Icons */
-.icon {
-  width: 22px;
-  height: 22px;
+td img.icon {
+  width: 20px;
   vertical-align: middle;
   margin-right: 6px;
 }
 
-/* Tags */
+/* ===============================
+   TAGS
+================================ */
 .tag {
-  display: inline-block;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: 999px;
   font-size: 12px;
+  display: inline-block;
   margin-right: 6px;
 }
 
-/* =========================
+/* ===============================
    PAGINATION
-   ========================= */
-
+================================ */
 .pagination {
   margin-top: 16px;
   display: flex;
-  gap: 10px;
   align-items: center;
+  gap: 12px;
 }
 
-/* =========================
+/* ===============================
    MOBILE
-   ========================= */
-
+================================ */
 @media (max-width: 768px) {
   .hero {
-    height: 220px;
+    height: 240px;
   }
 
   .hero-logo {
-    width: 100px;
-    height: 100px;
-    bottom: -50px;
+    width: 96px;
+    height: 96px;
+    bottom: -40px;
   }
 
   .hero-content h1 {
-    font-size: 30px;
+    font-size: 32px;
+  }
+
+  table {
+    font-size: 14px;
   }
 }
