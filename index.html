@@ -1,220 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Evan Luthra Investments</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fff;
+      color: #111;
+    }
+
+    a { color: #1a73e8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== HEADER ===== */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-logo {
+      width: 22px;
+      height: 22px;
+    }
+
+    .header-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      height: 240px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-logo {
+      position: absolute;
+      left: 60px;
+      bottom: -40px;
+      width: 96px;
+      height: 96px;
+      background: #fff;
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.18);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+      max-width: 1100px;
+      margin: auto;
+      padding: 80px 20px 40px;
+    }
+
+    h1 { font-size: 36px; margin-bottom: 20px; }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e5e5e5;
+      margin: 30px 0;
+    }
+
+    /* ===== PORTFOLIO ===== */
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .controls input,
+    .controls select,
+    .controls button {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+    }
+
+    th { font-weight: 600; }
+
+    .icon {
+      width: 22px;
+      height: 22px;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      margin-right: 4px;
+      background: #eee;
+    }
+
+    .pagination {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ================= TOP BAR ================= -->
-<header class="topbar">
-  <div class="topbar-inner">
-    <img src="assets/logo.avif" class="topbar-logo" alt="KOL Capital" />
-    <span class="topbar-title">Evan Luthra Investments</span>
+<!-- HEADER -->
+<header class="top-header">
+  <div class="header-inner">
+    <img src="icons/kol-capital.png" class="header-logo" alt="KOL Capital">
+    <span class="header-title">Evan Luthra Investments</span>
   </div>
 </header>
 
-<!-- ================= HERO ================= -->
-<header class="hero">
-  <img src="assets/banner.jpeg" class="banner" alt="Banner" />
+<!-- HERO -->
+<section class="hero">
+  <img src="images/banner.jpg" class="hero-bg" alt="Banner">
+  <img src="icons/kol-capital.png" class="hero-logo" alt="KOL Capital">
+</section>
 
-  <div class="hero-content">
-    <img src="assets/logo.avif" class="hero-logo" alt="KOL Capital" />
-    <h1>Evan Luthra Investments</h1>
+<!-- CONTENT -->
+<div class="main-content">
 
-    <ul class="socials">
-      <li>📸 Instagram: <a href="https://instagram.com/EvanLuthra" target="_blank">instagram.com/EvanLuthra</a></li>
-      <li>🐦 Twitter: <a href="https://x.com/evanluthra" target="_blank">x.com/evanluthra</a></li>
-      <li>✈️ Telegram: <a href="https://t.me/EvanLuthraVIP" target="_blank">t.me/EvanLuthraVIP</a></li>
-      <li>🌐 Explore: <a href="https://evanluthra.com" target="_blank">evanluthra.com</a></li>
-    </ul>
+  <h1>Evan Luthra Investments</h1>
 
-    <p class="contact">
-      If you would like an intro to any of these deals, reach out at
-      <a href="mailto:Evan@EvanLuthra.com">Evan@EvanLuthra.com</a>
-    </p>
+  <p>📸 Instagram: <a href="https://instagram.com/EvanLuthra" target="_blank">instagram.com/EvanLuthra</a></p>
+  <p>🐦 Twitter: <a href="https://x.com/evanluthra" target="_blank">x.com/evanluthra</a></p>
+  <p>✈️ Telegram: <a href="https://t.me/EvanLuthraVIP" target="_blank">t.me/EvanLuthraVIP</a></p>
+  <p>🌐 Explore: <a href="https://evanluthra.com" target="_blank">evanluthra.com</a></p>
 
-    <button id="darkToggle" class="dark-toggle">🌙</button>
+  <p style="margin-top:20px">
+    If you would like an intro to any of these deals, feel free to reach out directly on email
+    <a href="mailto:Evan@EvanLuthra.com">Evan@EvanLuthra.com</a>
+  </p>
+
+  <p style="color:#888;margin-top:10px">
+    Last Updated: 30th December, 2024
+  </p>
+
+  <hr>
+
+  <h2>💲 Portfolio</h2>
+
+  <div class="controls">
+    <input id="search" placeholder="Search projects...">
+    <select id="categoryFilter"><option value="">All Categories</option></select>
+    <select id="sort">
+      <option value="">Sort</option>
+      <option value="az">A–Z</option>
+      <option value="za">Z–A</option>
+      <option value="date">Newest</option>
+    </select>
+    <button id="exportCsv">Export CSV</button>
   </div>
-</header>
 
-<hr />
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Website</th>
+        <th>Category</th>
+        <th>Twitter</th>
+        <th>Company Intro</th>
+      </tr>
+    </thead>
+    <tbody id="portfolio"></tbody>
+  </table>
 
-<!-- ================= PORTFOLIO ================= -->
-<h2>💲 Portfolio</h2>
+  <div class="pagination">
+    <button id="prevPage">Prev</button>
+    <span id="pageInfo"></span>
+    <button id="nextPage">Next</button>
+  </div>
 
-<div class="controls">
-  <input type="text" id="search" placeholder="Search projects…" />
-
-  <select id="categoryFilter">
-    <option value="">All Categories</option>
-  </select>
-
-  <select id="sort">
-    <option value="">Sort</option>
-    <option value="az">Name A–Z</option>
-    <option value="za">Name Z–A</option>
-    <option value="date">Newest</option>
-  </select>
-
-  <button id="exportCsv">Export CSV</button>
 </div>
 
-<table id="portfolio">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Website</th>
-      <th>Category</th>
-      <th>Twitter</th>
-      <th>Company Intro</th>
-    </tr>
-  </thead>
-  <tbody id="tableBody"></tbody>
-</table>
-
-<div class="pagination">
-  <button id="prevPage">Prev</button>
-  <span id="pageInfo"></span>
-  <button id="nextPage">Next</button>
-</div>
-
-<!-- ================= DATA ================= -->
+<!-- DATA -->
 <script src="data.js"></script>
 
+<!-- LOGIC -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
   let currentPage = 1;
-  const PAGE_SIZE = 256;
-  const ADMIN_KEY = "admin_projects";
+  const PAGE_SIZE = 10;
 
-  window.safeProjects = localStorage.getItem(ADMIN_KEY)
-    ? JSON.parse(localStorage.getItem(ADMIN_KEY))
-    : projects;
-
-  if (!Array.isArray(safeProjects)) {
-    console.error("Projects data failed to load");
-    return;
-  }
-
-  const table  = document.getElementById("tableBody");
+  const table = document.getElementById("portfolio");
   const search = document.getElementById("search");
   const filter = document.getElementById("categoryFilter");
-  const sort   = document.getElementById("sort");
+  const sort = document.getElementById("sort");
 
-  const prevBtn   = document.getElementById("prevPage");
-  const nextBtn   = document.getElementById("nextPage");
-  const exportBtn = document.getElementById("exportCsv");
+  const prevBtn = document.getElementById("prevPage");
+  const nextBtn = document.getElementById("nextPage");
 
-  /* ---------- DARK MODE ---------- */
-  const toggle = document.getElementById("darkToggle");
-  if (localStorage.getItem("dark") === "true") {
-    document.body.classList.add("dark");
-  }
-  toggle.onclick = () => {
-    document.body.classList.toggle("dark");
-    localStorage.setItem("dark", document.body.classList.contains("dark"));
-  };
-
-  /* ---------- CATEGORY COLORS ---------- */
   const CATEGORY_COLORS = {
-    DePIN: "#e0f7fa",
-    Wallet: "#e3f2fd",
-    AI: "#fce4ec",
-    DApp: "#e8f5e9",
-    "Cross Chain": "#fff3e0",
-    L1: "#ede7f6"
+    DePIN:"#e0f7fa", Wallet:"#e3f2fd", AI:"#fce4ec",
+    DApp:"#e8f5e9", "Cross Chain":"#fff3e0", L1:"#ede7f6"
   };
 
-  /* ---------- FILTER OPTIONS ---------- */
   const cats = new Set();
-  safeProjects.forEach(p => p.category.forEach(c => cats.add(c)));
+  projects.forEach(p => p.category.forEach(c => cats.add(c)));
   cats.forEach(c => {
-    const opt = document.createElement("option");
-    opt.value = c;
-    opt.textContent = c;
-    filter.appendChild(opt);
+    const o = document.createElement("option");
+    o.value = c; o.textContent = c;
+    filter.appendChild(o);
   });
 
-  function getFilteredList() {
-    let list = [...safeProjects];
-
+  function getList() {
+    let list = [...projects];
     const q = search.value.toLowerCase();
-    if (q) {
-      list = list.filter(p =>
-        p.name.toLowerCase().includes(q) ||
-        p.intro.toLowerCase().includes(q)
-      );
-    }
 
-    if (filter.value) {
+    if (q) list = list.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.intro.toLowerCase().includes(q)
+    );
+
+    if (filter.value)
       list = list.filter(p => p.category.includes(filter.value));
-    }
 
-    if (sort.value === "az") list.sort((a,b) => a.name.localeCompare(b.name));
-    if (sort.value === "za") list.sort((a,b) => b.name.localeCompare(a.name));
-    if (sort.value === "date") list.sort((a,b) => new Date(b.date) - new Date(a.date));
+    if (sort.value === "az") list.sort((a,b)=>a.name.localeCompare(b.name));
+    if (sort.value === "za") list.sort((a,b)=>b.name.localeCompare(a.name));
+    if (sort.value === "date") list.sort((a,b)=>new Date(b.date)-new Date(a.date));
 
     return list;
   }
 
   function render() {
-    const list = getFilteredList();
-    const totalPages = Math.ceil(list.length / PAGE_SIZE) || 1;
-    currentPage = Math.min(Math.max(1, currentPage), totalPages);
-
-    const start = (currentPage - 1) * PAGE_SIZE;
-    const pageItems = list.slice(start, start + PAGE_SIZE);
+    const list = getList();
+    const totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+    currentPage = Math.min(currentPage, totalPages);
 
     table.innerHTML = "";
 
-    pageItems.forEach(p => {
-      table.innerHTML += `
-      <tr>
-        <td>
-          <div class="project-cell">
-            ${p.icon ? `<img src="${p.icon}" class="icon">` : ""}
-            <a href="project.html?id=${p.id}">${p.name}</a>
-          </div>
-        </td>
-        <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
-        <td>${p.category.map(c =>
-          `<span class="tag" style="background:${CATEGORY_COLORS[c] || '#eee'}">${c}</span>`
-        ).join(" ")}</td>
-        <td><a href="${p.twitter}" target="_blank">x.com</a></td>
-        <td>${p.intro}</td>
-      </tr>`;
-    });
+    list.slice((currentPage-1)*PAGE_SIZE, currentPage*PAGE_SIZE)
+      .forEach(p => {
+        table.innerHTML += `
+          <tr>
+            <td><img src="${p.icon}" class="icon">
+              <a href="project.html?id=${p.id}">${p.name}</a></td>
+            <td><a href="${p.website}" target="_blank">${p.website.replace("https://","")}</a></td>
+            <td>${p.category.map(c=>`<span class="tag" style="background:${CATEGORY_COLORS[c]||'#eee'}">${c}</span>`).join("")}</td>
+            <td><a href="${p.twitter}" target="_blank">x.com</a></td>
+            <td>${p.intro}</td>
+          </tr>`;
+      });
 
     document.getElementById("pageInfo").textContent =
       `Page ${currentPage} of ${totalPages}`;
   }
 
-  search.oninput = () => { currentPage = 1; render(); };
-  filter.onchange = () => { currentPage = 1; render(); };
-  sort.onchange   = () => { currentPage = 1; render(); };
+  search.oninput = () => { currentPage=1; render(); };
+  filter.onchange = () => { currentPage=1; render(); };
+  sort.onchange   = () => { currentPage=1; render(); };
 
-  prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; render(); } };
+  prevBtn.onclick = () => { if(currentPage>1){currentPage--; render();}};
   nextBtn.onclick = () => { currentPage++; render(); };
 
-  exportBtn.onclick = () => {
-    const rows = [
-      ["Name","Categories","Website","Twitter","Intro"],
-      ...getFilteredList().map(p => [
-        p.name,
-        p.category.join("|"),
-        p.website,
-        p.twitter,
-        p.intro
-      ])
-    ];
-
-    const csv = rows.map(r => r.map(v => `"${v}"`).join(",")).join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
+  document.getElementById("exportCsv").onclick = () => {
+    const rows = [["Name","Categories","Website","Twitter","Intro"]];
+    getList().forEach(p =>
+      rows.push([p.name,p.category.join("|"),p.website,p.twitter,p.intro])
+    );
+    const csv = rows.map(r=>r.map(v=>`"${v}"`).join(",")).join("\n");
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
+    a.href = URL.createObjectURL(new Blob([csv]));
     a.download = "portfolio.csv";
     a.click();
   };
