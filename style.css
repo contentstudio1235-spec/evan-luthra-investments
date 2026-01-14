@@ -265,5 +265,18 @@ td img.icon {
   }
 }
 
+/* ================================
+   FORCE HEADER LOGO SIZE (FIX)
+   ================================ */
+header img,
+.top-header img,
+.header img {
+  width: 22px !important;
+  height: 22px !important;
+  max-width: 22px !important;
+  max-height: 22px !important;
+  object-fit: contain !important;
+}
+
 
 
