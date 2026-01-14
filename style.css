@@ -85,16 +85,16 @@ body.dark #darkToggle {
   overflow: hidden;
 }
 
-/* KOL logo overlay */
+/* ===== Banner logo (large overlay) ===== */
 .hero-logo {
   position: absolute;
   left: 24px;
-  bottom: -48px;           /* half over banner */
+  bottom: -48px;
   width: 120px;
   height: 120px;
-  border-radius: 0;        /* NO STROKE */
-  background: none;
+  object-fit: contain;
 }
+
 
 /* ===============================
    MAIN CONTENT WRAPPER
@@ -264,5 +264,6 @@ td img.icon {
     font-size: 14px;
   }
 }
+
 
 
